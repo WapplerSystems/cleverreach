@@ -35,3 +35,28 @@
 .. :border: 0
 .. :align: left
 .. :name:
+
+.. |img-powermail-checkbox1|      image:: /Images/Powermail/checkbox1.png
+.. :border: 0
+.. :align: left
+.. :name:
+
+.. |img-powermail-checkbox2|      image:: /Images/Powermail/checkbox2.png
+.. :border: 0
+.. :align: left
+.. :name:
+
+.. |img-powermail-mode|      image:: /Images/Powermail/mode.png
+.. :border: 0
+.. :align: left
+.. :name:
+
+.. |img-powermail-validator-optin|      image:: /Images/Powermail/optin_validator.png
+.. :border: 0
+.. :align: left
+.. :name:
+
+.. |img-powermail-validator-optout|      image:: /Images/Powermail/optout_validator.png
+.. :border: 0
+.. :align: left
+.. :name:

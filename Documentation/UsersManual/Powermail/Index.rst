@@ -15,40 +15,43 @@ TYPO3 site. The installation is covered :ref:`here <installation>`.
 
 
 
-Add a plugin to a page
+Add a powermail plugin to a page
 ----------------------
 
-A plugin is used to render a defined selection of records in the frontend.
-Follow this steps to add a plugin respectively for detail- and list-view to a page:
+Add a powermail plugin with form as usual.
 
-Detail page
-^^^^^^^^^^^
 
-#. Create a new page “Detail” which will be used to show the full news
-   record. Insert the plugin “News system”. The 2 :sup:`nd` tab “Plugin”
-   is used to configure the extension.
+General settings for powermail
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Add a new content element and select the entry “News system”
+On the plugin page you have to choose the mode if you want to enable the finisher.
 
-#. Switch to the tab “Plugin” where you can define the plugin's settings.
-   The most important settings are “What to display” and “Startingpoint”.
+|img-powermail-mode|
 
-   #. Change the 1 :sup:`st` select box “What to display” to “Detail view”.
 
-   #. Save the plugin.
-   
 Opt in form
 ^^^^^^^^^^^
 
+You can add the special validator to you email field, but you don't have to.
 
+|img-powermail-validator-optin|
 
 Opt out form
 ^^^^^^^^^^^^
 
+You can add the special validator to you email field, but you don't have to.
 
-Contact form
-^^^^^^^^^^^^
+|img-powermail-validator-optout|
 
 
+Contact form with optional subscription
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+For example, if you want to let your customers choose to sign up for the newsletter, you can add a checkbox.
+It is very important that the variable name is **newslettercondition** and the value of the checkbox is **1**.
+
+
+|img-powermail-checkbox1|
+
+|img-powermail-checkbox2|
 
