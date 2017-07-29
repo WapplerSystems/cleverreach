@@ -21,4 +21,3 @@ For administrators
 
 	Installation/Index
 	Powermail/Index
-	ExtForm/Index

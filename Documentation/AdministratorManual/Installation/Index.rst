@@ -30,8 +30,6 @@ The extension needs to be installed as any other extension of TYPO3 CMS:
 
    #. **Use composer**: Use `composer require svewap/cleverreach`.
 
-#. The Extension Manager offers some basic configuration which is
-   explained :ref:`here <extensionManager>`.
 
 Latest version from git
 -----------------------
