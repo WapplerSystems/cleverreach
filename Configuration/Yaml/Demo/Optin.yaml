@@ -1,0 +1,45 @@
+
+renderingOptions:
+  submitButtonLabel: Senden
+identifier: clvroptin
+label: 'CleverReach Optin'
+type: Form
+prototypeName: standard
+finishers:
+  -
+    options:
+      pageUid: '7'
+    identifier: Cleverreach
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: 'previous Page'
+      nextButtonLabel: 'next Page'
+    identifier: page-1
+    label: 'Double Optin Formular'
+    type: Page
+    renderables:
+      -
+        defaultValue: ''
+        identifier: name
+        label: Name
+        type: Text
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: Name
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        defaultValue: ''
+        identifier: email
+        label: Email
+        type: Text
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: 'Email address'
+        validators:
+          -
+            identifier: NotEmpty
+          -
+            identifier: EmailAddress

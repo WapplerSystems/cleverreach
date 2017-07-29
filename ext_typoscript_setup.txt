@@ -1,0 +1,14 @@
+module.tx_form {
+    settings {
+        yamlConfigurations {
+            80 = EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml
+
+            90 = EXT:cleverreach/Configuration/Yaml/Demo/Optin.yaml
+        }
+    }
+    view {
+        templateRootPaths.80 = EXT:cleverreach/Resources/Private/Backend/Templates/
+        partialRootPaths.80 = EXT:cleverreach/Resources/Private/Backend/Partials/
+        layoutRootPaths.80 = EXT:cleverreach/Resources/Private/Backend/Layouts/
+    }
+}

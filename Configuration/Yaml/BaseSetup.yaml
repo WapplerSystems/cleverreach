@@ -1,0 +1,87 @@
+TYPO3:
+  CMS:
+    Form:
+
+      persistenceManager:
+        allowedExtensionPaths:
+          10: EXT:cleverreach/Configuration/Yaml/Demo/
+          #20: EXT:form/Configuration/Yaml/
+        allowSaveToExtensionPaths: true
+        allowDeleteFromExtensionPaths: true
+
+      prototypes:
+        standard:
+
+          formElementsDefinition:
+
+            GenderSelect:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.RadioButton'
+              renderingOptions:
+                templateFileName: 'RadioButton'
+              properties:
+                options:
+                  f: 'Female'
+                  m: 'Male'
+                  u: 'Unicorn'
+                  a: 'Alien'
+
+            Form:
+              formEditor:
+
+                editors:
+                  900:
+                    selectOptions:
+                      90:
+                        value: 'CleverReach'
+                        label: 'CleverReach'
+
+                propertyCollections:
+                  finishers:
+                    980:
+                      identifier: 'Cleverreach'
+                      editors:
+                        100:
+                          identifier: 'header'
+                          templateName: 'Inspector-CollectionElementHeaderEditor'
+                          label: 'CleverReach'
+                        200:
+                          identifier: 'pageUid'
+                          templateName: 'Inspector-Typo3WinBrowserEditor'
+                          label: 'formEditor.elements.Form.finisher.Redirect.editor.pageUid.label'
+                          buttonLabel: 'formEditor.elements.Form.finisher.Redirect.editor.pageUid.buttonLabel'
+                          browsableType: pages
+                          propertyPath: 'options.pageUid'
+                          propertyValidatorsMode: 'OR'
+                          propertyValidators:
+                            10: 'Integer'
+                            20: 'FormElementIdentifierWithinCurlyBracesExclusive'
+                        9999:
+                          identifier: 'removeButton'
+                          templateName: 'Inspector-RemoveElementEditor'
+
+          finishersDefinition:
+            Cleverreach:
+              implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher'
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+                label: CleverReach
+                predefinedDefaults:
+                  options:
+                    pageUid: ''
+
+              FormEngine:
+                label: CleverReach
+                elements:
+                  pageUid:
+                    label: 'tt_content.finishersDefinition.Redirect.pageUid.label'
+                    config:
+                      type: 'group'
+                      internal_type: 'db'
+                      allowed: 'pages'
+                      size: 1
+                      minitems: 1
+                      maxitems: 1
+                      fieldWizard:
+                        recordOverview:
+                          disabled: 1
