@@ -12,15 +12,29 @@ namespace WapplerSystems\Cleverreach\Domain\Model;
 class Group
 {
 
-
+    /**
+     * @var int
+     */
     protected $id;
 
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var int
+     */
     protected $lastMailing = 0;
 
+    /**
+     * @var int
+     */
     protected $lastChanged = 0;
 
+    /**
+     * @var int
+     */
     protected $stamp = 0;
 
 
@@ -31,15 +45,15 @@ class Group
     protected $locked = false;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      */
     public function setId($id)
     {

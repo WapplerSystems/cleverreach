@@ -70,19 +70,19 @@ class ConfigurationService {
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getGroupId() {
         $config = $this->getConfiguration();
-        return $config['groupId'];
+        return (int)$config['groupId'];
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getFormId() {
         $config = $this->getConfiguration();
-        return $config['formId'];
+        return (int)$config['formId'];
     }
 
 

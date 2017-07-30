@@ -18,19 +18,22 @@ class Receiver
     protected $email = '';
 
     /**
+     * timestamp
      * @var int
      */
     protected $activated = 0;
 
     /**
+     * timestamp
      * @var int
      */
     protected $registered = 0;
 
     /**
+     * timestamp
      * @var int
      */
-    protected $deactivated = 1;
+    protected $deactivated = 0;
 
     /**
      * @var string
@@ -61,17 +64,23 @@ class Receiver
     public function __construct($email,$attributes = null) {
         $this->email = $email;
         $this->attributes = $attributes;
+        $this->registered = time();
     }
 
 
     /**
      * @return array
      */
-    public function toArray() {
+    public function toArray(): array
+    {
         return [
             'email' => $this->email,
             'activated' => $this->activated,
             'deactivated' => $this->deactivated,
+            'registered' => $this->registered,
+            'attributes' => $this->attributes,
+            'global_attributes' => $this->attributes,
+            'source' => 'TYPO3',
         ];
     }
 

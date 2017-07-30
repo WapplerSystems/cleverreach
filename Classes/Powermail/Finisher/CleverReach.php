@@ -12,6 +12,7 @@ namespace WapplerSystems\Cleverreach\Powermail\Finisher;
 use In2code\Powermail\Domain\Model\Answer;
 use In2code\Powermail\Domain\Model\Mail;
 use In2code\Powermail\Finisher\AbstractFinisher;
+use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 
 class CleverReach extends AbstractFinisher
 {
@@ -81,7 +82,8 @@ class CleverReach extends AbstractFinisher
 
         if ($this->settings['main']['cleverreach'] === 'optin') {
 
-            $this->api->addReceiversToGroup($this->email,$groupId);
+            $receiver = new Receiver($this->email,$formValues);
+            $this->api->addReceiversToGroup($receiver,$groupId);
             $this->api->sendSubscribeMail($this->email,$formId,$groupId);
 
         } else if ($this->settings['main']['cleverreach'] === 'optout') {

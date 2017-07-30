@@ -114,9 +114,10 @@ class Api
 
 
     /**
+     * TODO
+     *
      * @param mixed $receivers
      * @param int $groupId
-     * @return mixed
      */
     public function removeReceiversFromGroup($receivers, $groupId = null)
     {
@@ -126,6 +127,10 @@ class Api
     }
 
 
+    /**
+     * @param int $groupId
+     * @return mixed|null
+     */
     public function getGroup($groupId = null)
     {
         $this->connect();
@@ -148,7 +153,7 @@ class Api
      * @param int $groupId
      * @return bool
      */
-    public function isReceiverOfGroup($id, $groupId = null)
+    public function isReceiverOfGroup($id, $groupId = null): bool
     {
         $this->connect();
 
@@ -194,7 +199,7 @@ class Api
         ];
 
         try {
-            $return = $this->rest->post('/forms.json/' . $formId . '/send/activate',
+            $this->rest->post('/forms.json/' . $formId . '/send/activate',
                 [
                     'email' => $email,
                     'groups_id' => $groupId,
@@ -210,9 +215,9 @@ class Api
 
 
     /**
-     * @param $email
-     * @param null $formId
-     * @param null $groupId
+     * @param string $email
+     * @param int $formId
+     * @param int $groupId
      */
     public function sendUnsubscribeMail($email, $formId = null, $groupId = null)
     {
@@ -233,7 +238,7 @@ class Api
         ];
 
         try {
-            $return = $this->rest->post('/forms.json/' . $formId . '/send/deactivate',
+            $this->rest->post('/forms.json/' . $formId . '/send/deactivate',
                 [
                     'email' => $email,
                     'groups_id' => $groupId,

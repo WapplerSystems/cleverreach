@@ -15,7 +15,6 @@ use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Finishers\Exception\FinisherException;
 use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
-use WapplerSystems\Cleverreach\Tools\Rest;
 
 
 class CleverreachFinisher extends AbstractFinisher
@@ -44,10 +43,7 @@ class CleverreachFinisher extends AbstractFinisher
     protected function executeInternal()
     {
 
-        $formRuntime = $this->finisherContext->getFormRuntime();
-
         $formValues = $this->getFormValues();
-
 
         $email = null;
         $attributes = [];
