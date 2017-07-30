@@ -1,9 +1,9 @@
 
 renderingOptions:
   submitButtonLabel: Senden
-  cleverreachmode: Optin
-identifier: clvroptin
-label: 'CleverReach Optin'
+  cleverreachmode: Optout
+identifier: clvroptout
+label: 'CleverReach Optout'
 type: Form
 prototypeName: standard
 finishers:
@@ -11,35 +11,20 @@ finishers:
     options:
       formId: ''
       groupId: ''
-      mode: Optin
+      mode: Optout
     identifier: Cleverreach
-  -
-    options:
-      pageUid: '28'
-      additionalParameters: ''
-    identifier: Redirect
+    properties:
+      mode: Optout
 renderables:
   -
     renderingOptions:
       previousButtonLabel: 'previous Page'
       nextButtonLabel: 'next Page'
+      cleverreachmode: Optout
     identifier: page-1
-    label: 'Double Optin Formular'
+    label: 'Double Optout Formular'
     type: Page
     renderables:
-      -
-        defaultValue: ''
-        identifier: name
-        label: Name
-        type: Text
-        properties:
-          fluidAdditionalAttributes:
-            placeholder: Name
-            required: required
-          cleverreachField: name
-        validators:
-          -
-            identifier: NotEmpty
       -
         defaultValue: ''
         identifier: email

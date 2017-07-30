@@ -14,6 +14,15 @@ TYPO3:
 
           formElementsDefinition:
 
+            Text:
+              formEditor:
+                editors:
+                  900:
+                    identifier: 'cleverreachField'
+                    templateName: 'Inspector-TextEditor'
+                    label: 'CleverReach field'
+                    propertyPath: 'properties.cleverreachField'
+
             GenderSelect:
               __inheritances:
                 10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.RadioButton'
@@ -46,16 +55,30 @@ TYPO3:
                           templateName: 'Inspector-CollectionElementHeaderEditor'
                           label: 'CleverReach'
                         200:
-                          identifier: 'pageUid'
-                          templateName: 'Inspector-Typo3WinBrowserEditor'
-                          label: 'formEditor.elements.Form.finisher.Redirect.editor.pageUid.label'
-                          buttonLabel: 'formEditor.elements.Form.finisher.Redirect.editor.pageUid.buttonLabel'
-                          browsableType: pages
-                          propertyPath: 'options.pageUid'
-                          propertyValidatorsMode: 'OR'
-                          propertyValidators:
-                            10: 'Integer'
-                            20: 'FormElementIdentifierWithinCurlyBracesExclusive'
+                          identifier: 'formId'
+                          templateName: 'Inspector-TextEditor'
+                          label: 'Form Id'
+                          propertyPath: 'options.formId'
+                        300:
+                          identifier: 'groupId'
+                          templateName: 'Inspector-TextEditor'
+                          label: 'Group Id'
+                          propertyPath: 'options.groupId'
+                        400:
+                          identifier: 'cleverreachFinisher'
+                          templateName: 'Inspector-SingleSelectEditor'
+                          propertyPath: 'options.mode'
+                          label: 'Mode'
+                          selectOptions:
+                            10:
+                              value: ''
+                              label: '---'
+                            20:
+                              value: 'Optin'
+                              label: 'Opt in'
+                            30:
+                              value: 'Optout'
+                              label: 'Opt out'
                         9999:
                           identifier: 'removeButton'
                           templateName: 'Inspector-RemoveElementEditor'
@@ -68,20 +91,17 @@ TYPO3:
                 label: CleverReach
                 predefinedDefaults:
                   options:
-                    pageUid: ''
+                    formId: ''
+                    groupId: ''
 
               FormEngine:
                 label: CleverReach
                 elements:
-                  pageUid:
-                    label: 'tt_content.finishersDefinition.Redirect.pageUid.label'
+                  formId:
+                    label: 'Form ID'
                     config:
-                      type: 'group'
-                      internal_type: 'db'
-                      allowed: 'pages'
-                      size: 1
-                      minitems: 1
-                      maxitems: 1
-                      fieldWizard:
-                        recordOverview:
-                          disabled: 1
+                      type: 'input'
+                  groupId:
+                    label: 'Group ID'
+                    config:
+                      type: 'input'

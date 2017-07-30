@@ -14,11 +14,19 @@ namespace WapplerSystems\Cleverreach\Form\Finishers;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Finishers\Exception\FinisherException;
 use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
+use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 use WapplerSystems\Cleverreach\Tools\Rest;
 
 
 class CleverreachFinisher extends AbstractFinisher
 {
+
+    /**
+     * @var \WapplerSystems\Cleverreach\CleverReach\Api
+     * @inject
+     */
+    protected $api;
+
 
     /**
      * @var array
@@ -35,27 +43,46 @@ class CleverreachFinisher extends AbstractFinisher
      */
     protected function executeInternal()
     {
-        if (!is_array($this->options)) {
-            $options[] = $this->options;
-        } else {
-            $options = $this->options;
+
+        $formRuntime = $this->finisherContext->getFormRuntime();
+
+        $formValues = $this->getFormValues();
+
+
+        $email = null;
+        $attributes = [];
+
+
+        foreach ($formValues as $identifier => $value) {
+
+            $element = $this->finisherContext->getFormRuntime()->getFormDefinition()->getElementByIdentifier($identifier);
+            $properties = $element->getProperties();
+            if (isset($properties['cleverreachField'])) {
+                if ($properties['cleverreachField'] === 'email') {
+                    $email = $value;
+                } else {
+                    $attributes[$properties['cleverreachField']] = $value;
+                }
+
+            }
+
         }
 
-        foreach ($options as $optionKey => $option) {
-            $this->options = $option;
-            $this->process($optionKey);
+        if (isset($this->options['mode']) && strlen($email) > 0) {
+
+            if ($this->options['mode'] === 'Optin') {
+
+                $receiver = new Receiver($email,$attributes);
+                $this->api->addReceiversToGroup($receiver,$this->options['groupId']);
+                $this->api->sendSubscribeMail($email,$this->options['formId'],$this->options['groupId']);
+
+            } else if ($this->options['mode'] === 'Optout') {
+
+                $this->api->sendUnsubscribeMail($email);
+
+            }
+
         }
-    }
-
-    /**
-     * Perform the current database operation
-     *
-     * @param int $iterationCount
-     */
-    protected function process(int $iterationCount)
-    {
-
-
 
 
     }

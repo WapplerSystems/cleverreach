@@ -2,10 +2,12 @@
 renderingOptions:
   submitButtonLabel: Senden
   cleverreachmode: Optin
-identifier: clvroptin
-label: 'CleverReach Optin'
+identifier: clvrcontact
+label: 'CleverReach Contact'
 type: Form
 prototypeName: standard
+options:
+  cleverreachmode: Optin
 finishers:
   -
     options:
@@ -13,11 +15,8 @@ finishers:
       groupId: ''
       mode: Optin
     identifier: Cleverreach
-  -
-    options:
-      pageUid: '28'
-      additionalParameters: ''
-    identifier: Redirect
+    properties:
+      mode: Optin
 renderables:
   -
     renderingOptions:
@@ -55,3 +54,8 @@ renderables:
             identifier: NotEmpty
           -
             identifier: EmailAddress
+      -
+        defaultValue: ''
+        type: Textarea
+        identifier: textarea-1
+        label: Mitteilung

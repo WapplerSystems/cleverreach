@@ -31,9 +31,11 @@ class ConfigurationService {
             'cleverreach'
         );
         return $settings['plugin.']['tx_cleverreach.']['settings.'];
-
     }
 
+    /**
+     * @return string
+     */
     public function getRestUrl() {
 
         $config = $this->getConfiguration();
@@ -41,6 +43,9 @@ class ConfigurationService {
 
     }
 
+    /**
+     * @return string
+     */
     public function getClientId() {
 
         $config = $this->getConfiguration();
@@ -48,21 +53,33 @@ class ConfigurationService {
 
     }
 
+    /**
+     * @return string
+     */
     public function getLoginName() {
         $config = $this->getConfiguration();
         return $config['login'];
     }
 
+    /**
+     * @return string
+     */
     public function getPassword() {
         $config = $this->getConfiguration();
         return $config['password'];
     }
 
+    /**
+     * @return string
+     */
     public function getGroupId() {
         $config = $this->getConfiguration();
         return $config['groupId'];
     }
 
+    /**
+     * @return string
+     */
     public function getFormId() {
         $config = $this->getConfiguration();
         return $config['formId'];

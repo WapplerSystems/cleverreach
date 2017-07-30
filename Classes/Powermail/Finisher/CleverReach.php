@@ -84,7 +84,6 @@ class CleverReach extends AbstractFinisher
             $this->api->addReceiversToGroup($this->email,$groupId);
             $this->api->sendSubscribeMail($this->email,$formId,$groupId);
 
-
         } else if ($this->settings['main']['cleverreach'] === 'optout') {
 
             //$this->api->removeReceiversFromGroup($this->email);

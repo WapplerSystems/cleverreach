@@ -30,7 +30,7 @@ class Receiver
     /**
      * @var int
      */
-    protected $deactivated = 0;
+    protected $deactivated = 1;
 
     /**
      * @var string
@@ -56,9 +56,11 @@ class Receiver
     /**
      * Receiver constructor.
      * @param string $email
+     * @param array $attributes
      */
-    public function __construct($email) {
+    public function __construct($email,$attributes = null) {
         $this->email = $email;
+        $this->attributes = $attributes;
     }
 
 

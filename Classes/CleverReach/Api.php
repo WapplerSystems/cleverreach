@@ -78,13 +78,20 @@ class Api
     {
         $this->connect();
 
-        if ($groupId === null) {
+        if ($groupId === null || $groupId === '') {
             $groupId = $this->configurationService->getGroupId();
         }
         $aReceivers = [];
 
         if ($receivers instanceof Receiver) {
             $aReceivers[] = $receivers->toArray();
+        }
+        if (is_array($receivers)) {
+            foreach ((array)$receivers as $receiver) {
+                if ($receiver instanceof Receiver) {
+                    $aReceivers[] = $receivers->toArray();
+                }
+            }
         }
         if (is_string($receivers)) {
             $aReceivers[] = (new Receiver($receivers))->toArray();
@@ -123,7 +130,7 @@ class Api
     {
         $this->connect();
 
-        if ($groupId === null) {
+        if ($groupId === null || $groupId === '') {
             $groupId = $this->configurationService->getGroupId();
         }
 
@@ -173,10 +180,10 @@ class Api
         $this->connect();
 
 
-        if ($groupId === null) {
+        if ($groupId === null || $groupId === '') {
             $groupId = $this->configurationService->getGroupId();
         }
-        if ($formId === null) {
+        if ($formId === null || $formId === '') {
             $formId = $this->configurationService->getFormId();
         }
 
