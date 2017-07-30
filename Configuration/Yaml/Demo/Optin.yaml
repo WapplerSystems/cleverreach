@@ -1,7 +1,6 @@
 
 renderingOptions:
-  submitButtonLabel: Senden
-  cleverreachmode: Optin
+  submitButtonLabel: Sende
 identifier: clvroptin
 label: 'CleverReach Optin'
 type: Form

@@ -1,7 +1,6 @@
 
 renderingOptions:
   submitButtonLabel: Senden
-  cleverreachmode: Optout
 identifier: clvroptout
 label: 'CleverReach Optout'
 type: Form

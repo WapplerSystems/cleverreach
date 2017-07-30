@@ -6,8 +6,6 @@ identifier: clvrcontact
 label: 'CleverReach Contact'
 type: Form
 prototypeName: standard
-options:
-  cleverreachmode: Optin
 finishers:
   -
     options:
@@ -15,8 +13,6 @@ finishers:
       groupId: ''
       mode: Optin
     identifier: Cleverreach
-    properties:
-      mode: Optin
 renderables:
   -
     renderingOptions:
