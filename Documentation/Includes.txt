@@ -60,3 +60,8 @@
 .. :border: 0
 .. :align: left
 .. :name:
+
+.. |img-form-examples|      image:: /Images/Form/examples.png
+.. :border: 0
+.. :align: left
+.. :name:

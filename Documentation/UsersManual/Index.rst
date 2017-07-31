@@ -19,4 +19,5 @@ For editors
 	:maxdepth: 5
 	:titlesonly:
 
+	Form/Index
 	Powermail/Index
