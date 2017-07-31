@@ -27,15 +27,14 @@ class OptinValidator
      * @param string $validationConfiguration
      * @return bool
      */
-    public function validate120($value, $validationConfiguration)
+    public function validate120($value, $validationConfiguration): bool
     {
         $value = trim($value);
 
         if (!GeneralUtility::validEmail($value)) {
             return FALSE;
         }
-
-        return !$this->api->isReceiverOfGroup($value);
+        return !$this->api->isReceiverOfGroupAndActive($value);
     }
 
 

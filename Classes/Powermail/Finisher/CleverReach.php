@@ -33,6 +33,7 @@ class CleverReach extends AbstractFinisher
 
 
     /**
+     * Because of T3 7 compatibility use this class
      * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
      * @inject
      */
@@ -75,7 +76,7 @@ class CleverReach extends AbstractFinisher
 
         if (array_key_exists('newslettercondition',$formValues)) {
             /* checkbox field exists -> check if true */
-            if ((int)$formValues['newslettercondition'] != 1) {
+            if ((int)$formValues['newslettercondition'] !== 1) {
                 return;
             }
         }

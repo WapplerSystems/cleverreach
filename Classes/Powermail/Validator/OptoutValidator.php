@@ -25,15 +25,14 @@ class OptoutValidator
      * @param string $validationConfiguration
      * @return bool
      */
-    public function validate120($value, $validationConfiguration)
+    public function validate121($value, $validationConfiguration): bool
     {
         $value = trim($value);
 
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             return FALSE;
         }
-
-        return $this->api->isReceiverOfGroup($value);
+        return $this->api->isReceiverOfGroupAndActive($value);
     }
 
 

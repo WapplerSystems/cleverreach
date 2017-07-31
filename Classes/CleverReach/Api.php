@@ -1,4 +1,5 @@
 <?php
+
 namespace WapplerSystems\Cleverreach\CleverReach;
 
 /**
@@ -162,14 +163,55 @@ class Api
         }
 
         try {
-            $return = $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
-            if (is_object($return)) {
-                if ($return->deactivated === 0) {
-                    return true;
-                }
-            }
+            $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            return true;
         } catch (\Exception $ex) {
-            $this->log($ex);
+            if ($ex->getCode() !== 404) {
+                $this->log($ex);
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * @param mixed $id id or email
+     * @param int $groupId
+     * @return Receiver
+     */
+    public function getReceiverOfGroup($id, $groupId = null): Receiver
+    {
+        $this->connect();
+
+        if ($groupId === null) {
+            $groupId = $this->configurationService->getGroupId();
+        }
+
+        try {
+            $return = $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            return Receiver::createInstance($return);
+
+        } catch (\Exception $ex) {
+            if ($ex->getCode() !== 404) {
+                $this->log($ex);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * @param mixed $id id or email
+     * @param int $groupId
+     * @return bool
+     */
+    public function isReceiverOfGroupAndActive($id, $groupId = null): bool
+    {
+
+
+        $receiver = $this->getReceiverOfGroup($id, $groupId);
+        if ($receiver !== null) {
+            return $receiver->isActive();
         }
         return false;
     }
@@ -253,8 +295,8 @@ class Api
     }
 
 
-
-    private function log(\Exception $ex) {
+    private function log(\Exception $ex)
+    {
 
         $this->logger->info($ex->getMessage());
 

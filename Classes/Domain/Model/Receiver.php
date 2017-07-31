@@ -1,4 +1,5 @@
 <?php
+
 namespace WapplerSystems\Cleverreach\Domain\Model;
 
 /**
@@ -57,11 +58,18 @@ class Receiver
 
 
     /**
+     * @var array
+     */
+    protected $events = [];
+
+
+    /**
      * Receiver constructor.
      * @param string $email
      * @param array $attributes
      */
-    public function __construct($email,$attributes = null) {
+    public function __construct($email, $attributes = null)
+    {
         $this->email = $email;
         $this->attributes = $attributes;
         $this->registered = time();
@@ -84,6 +92,29 @@ class Receiver
         ];
     }
 
+
+    /**
+     * @param \stdClass $obj
+     * @return Receiver
+     */
+    public static function createInstance($obj): Receiver
+    {
+        $inst = new self($obj->email);
+        $inst->registered = $obj->registered;
+        $inst->activated = $obj->activated;
+        $inst->deactivated = $obj->deactivated;
+        $inst->attributes = (array)$obj->attributes;
+        return $inst;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return ($this->activated > 0 && $this->deactivated == 0);
+    }
 
     /**
      * @return string
@@ -211,6 +242,22 @@ class Receiver
     public function setOrders(array $orders)
     {
         $this->orders = $orders;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvents(): array
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param array $events
+     */
+    public function setEvents(array $events)
+    {
+        $this->events = $events;
     }
 
 
