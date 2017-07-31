@@ -33,7 +33,7 @@ class CleverReach extends AbstractFinisher
 
 
     /**
-     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
+     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
      * @inject
      */
     protected $typoScriptService;
