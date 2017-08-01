@@ -179,7 +179,7 @@ class Api
      * @param int $groupId
      * @return Receiver
      */
-    public function getReceiverOfGroup($id, $groupId = null): Receiver
+    public function getReceiverOfGroup($id, $groupId = null)
     {
         $this->connect();
 
