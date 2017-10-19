@@ -124,7 +124,15 @@ class Api
     {
         $this->connect();
 
+        if ($groupId === null) {
+            $groupId = $this->configurationService->getGroupId();
+        }
 
+        try {
+            $this->rest->delete('/groups.json/' . $groupId . '/receivers/' . $receivers);
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
     }
     
     
