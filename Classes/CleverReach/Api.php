@@ -126,6 +126,28 @@ class Api
 
 
     }
+    
+    
+    /**
+     * Sets receiver state to inactive
+     * 
+     * @param mixed $receivers
+     * @param int $groupId
+     */
+    public function disableReceiversInGroup($receivers, $groupId = null)
+    {
+        $this->connect();
+
+        if ($groupId === null) {
+            $groupId = $this->configurationService->getGroupId();
+        }
+
+        try {
+            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setinactive');
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
+    }
 
 
     /**
