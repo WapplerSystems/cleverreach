@@ -15,7 +15,7 @@ plugin.tx_cleverreach {
     # cat=plugin.tx_cleverreach//e; type=string; label=Source name
     source = TYPO3
     
-    # cat=plugin.tx_cleverreach//f; type=options[Set user inactive=inactive,Delete user=delete]; label=How users will be removed
+    # cat=plugin.tx_cleverreach//f; type=options[Set user inactive=inactive,doubleoptout=inactive with double-opt-out email,delete=delete]; label=How users will be removed
     unsubscribemethod = inactive
     
     # cat=plugin.tx_cleverreach//e; type=int; label=Debug mode

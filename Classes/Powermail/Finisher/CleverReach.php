@@ -89,9 +89,19 @@ class CleverReach extends AbstractFinisher
 
         } else if ($this->settings['main']['cleverreach'] === 'optout') {
 
-            //$this->api->removeReceiversFromGroup($this->email);
-            //$this->api->sendUnsubscribeMail($this->email);
-            $this->api->disableReceiversInGroup($this->email, $groupId);
+            if ($this->configurationService->getUnsubscribeMethod() === 'doubleoptout') {
+                
+                $this->api->sendUnsubscribeMail($this->email);
+                
+            } else if ($this->configurationService->getUnsubscribeMethod() === 'delete') {
+                
+                // $this->api->removeReceiversFromGroup($this->email);
+                
+            } else {
+                
+                $this->api->disableReceiversInGroup($this->email, $groupId);
+                
+            }
 
         }
 
