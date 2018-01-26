@@ -25,7 +25,7 @@ class OptoutValidator
      * @param string $validationConfiguration
      * @return bool
      */
-    public function validate121($value, $validationConfiguration): bool
+    public function validateOptout($value, $validationConfiguration): bool
     {
         $value = trim($value);
 

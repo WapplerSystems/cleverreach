@@ -1,7 +1,7 @@
 
 
-tx_powermail.flexForm.validation.addFieldOptions.120 = CleverReach Optin Email
-tx_powermail.flexForm.validation.addFieldOptions.121 = CleverReach Optout Email
+tx_powermail.flexForm.validation.addFieldOptions.optin = CleverReach Optin Email
+tx_powermail.flexForm.validation.addFieldOptions.optout = CleverReach Optout Email
 
 
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach._sheet = main
