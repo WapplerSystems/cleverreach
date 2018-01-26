@@ -8,8 +8,8 @@ plugin.tx_powermail {
             native = 1
             server = 1
             customValidation {
-                120 = WapplerSystems\Cleverreach\Powermail\Validator\OptinValidator
-                121 = WapplerSystems\Cleverreach\Powermail\Validator\OptoutValidator
+                optin = WapplerSystems\Cleverreach\Powermail\Validator\OptinValidator
+                optout = WapplerSystems\Cleverreach\Powermail\Validator\OptoutValidator
             }
         }
 
@@ -25,9 +25,9 @@ plugin.tx_powermail {
         }
 
     }
-    _LOCAL_LANG.default.validationerror_validation.120 = No correct email address or already in list
-    _LOCAL_LANG.de.validationerror_validation.120 = Keine korrekte Email-Adresse oder sie befindet sich schon in der Liste
+    _LOCAL_LANG.default.validationerror_validation.optin = No correct email address or already in list
+    _LOCAL_LANG.de.validationerror_validation.optin = Keine korrekte Email-Adresse oder sie befindet sich schon in der Liste
 
-    _LOCAL_LANG.default.validationerror_validation.121 = This email address is not in our list
-    _LOCAL_LANG.de.validationerror_validation.121 = Diese Email-Adresse befindet sich nicht in unserer Liste
+    _LOCAL_LANG.default.validationerror_validation.optout = This email address is not in our list
+    _LOCAL_LANG.de.validationerror_validation.optout = Diese Email-Adresse befindet sich nicht in unserer Liste
 }

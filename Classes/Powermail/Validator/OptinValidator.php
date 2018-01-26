@@ -27,7 +27,7 @@ class OptinValidator
      * @param string $validationConfiguration
      * @return bool
      */
-    public function validate120($value, $validationConfiguration): bool
+    public function validateOptin($value, $validationConfiguration): bool
     {
         $value = trim($value);
 
