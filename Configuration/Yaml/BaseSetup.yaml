@@ -42,7 +42,7 @@ TYPO3:
                   900:
                     selectOptions:
                       90:
-                        value: 'CleverReach'
+                        value: 'Cleverreach'
                         label: 'CleverReach'
 
                 propertyCollections:
