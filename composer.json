@@ -3,7 +3,7 @@
     "description": "CleverReach finishers and validators for EXT:form and Powermail",
     "type": "typo3-cms-extension",
     "homepage": "http://wappler.systems",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "require": {
         "typo3/cms": ">=7.6.0, <8.7.99"
     },
