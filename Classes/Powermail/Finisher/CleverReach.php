@@ -59,6 +59,13 @@ class CleverReach extends AbstractFinisher
 
 
     /**
+     * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
+     * @inject
+     */
+    protected $configurationService;
+    
+    
+    /**
      *
      * @return void
      */
@@ -89,8 +96,19 @@ class CleverReach extends AbstractFinisher
 
         } else if ($this->settings['main']['cleverreach'] === 'optout') {
 
-            //$this->api->removeReceiversFromGroup($this->email);
-            $this->api->sendUnsubscribeMail($this->email);
+            if ($this->configurationService->getUnsubscribeMethod() === 'doubleoptout') {
+
+                $this->api->sendUnsubscribeMail($this->email);
+
+            } else if ($this->configurationService->getUnsubscribeMethod() === 'delete') {
+
+                $this->api->removeReceiversFromGroup($this->email);
+
+            } else {
+
+                $this->api->disableReceiversInGroup($this->email, $groupId);
+
+            }
 
         }
 
