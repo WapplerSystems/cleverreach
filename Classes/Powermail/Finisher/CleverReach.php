@@ -59,6 +59,13 @@ class CleverReach extends AbstractFinisher
 
 
     /**
+     * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
+     * @inject
+     */
+    protected $configurationService;
+    
+    
+    /**
      *
      * @return void
      */
