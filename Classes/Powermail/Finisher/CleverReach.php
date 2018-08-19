@@ -12,6 +12,7 @@ namespace WapplerSystems\Cleverreach\Powermail\Finisher;
 use In2code\Powermail\Domain\Model\Answer;
 use In2code\Powermail\Domain\Model\Mail;
 use In2code\Powermail\Finisher\AbstractFinisher;
+use WapplerSystems\Cleverreach\CleverReach\Api;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 
 class CleverReach extends AbstractFinisher
@@ -77,8 +78,8 @@ class CleverReach extends AbstractFinisher
         $formValues = $this->getFormValues($this->getMail());
 
         $settings = $this->getSettings();
-        $formId = isset($settings['main']['cleverreachFormId']) && strlen($settings['main']['cleverreachFormId']) > 0 ? $settings['main']['cleverreachFormId'] : null;
-        $groupId = isset($settings['main']['cleverreachGroupId']) && strlen($settings['main']['cleverreachGroupId']) > 0 ? $settings['main']['cleverreachGroupId'] : null;
+        $formId = isset($settings['main']['cleverreachFormId']) && \strlen($settings['main']['cleverreachFormId']) > 0 ? $settings['main']['cleverreachFormId'] : null;
+        $groupId = isset($settings['main']['cleverreachGroupId']) && \strlen($settings['main']['cleverreachGroupId']) > 0 ? $settings['main']['cleverreachGroupId'] : null;
 
 
         if (array_key_exists('newslettercondition',$formValues)) {
@@ -88,13 +89,13 @@ class CleverReach extends AbstractFinisher
             }
         }
 
-        if ($this->settings['main']['cleverreach'] === 'optin') {
+        if ($this->settings['main']['cleverreach'] === Api::MODE_OPTIN) {
 
             $receiver = new Receiver($this->email,$formValues);
             $this->api->addReceiversToGroup($receiver,$groupId);
             $this->api->sendSubscribeMail($this->email,$formId,$groupId);
 
-        } else if ($this->settings['main']['cleverreach'] === 'optout') {
+        } else if ($this->settings['main']['cleverreach'] === Api::MODE_OPTOUT) {
 
             if ($this->configurationService->getUnsubscribeMethod() === 'doubleoptout') {
 
@@ -146,7 +147,7 @@ class CleverReach extends AbstractFinisher
             }
 
             $value = $answer->getValue();
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $value = implode(', ', $value);
             }
 

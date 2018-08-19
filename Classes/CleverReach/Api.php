@@ -35,6 +35,11 @@ class Api
     protected $logger;
 
 
+    const MODE_OPTIN = 'optin';
+
+    const MODE_OPTOUT = 'optout';
+
+
     public function __construct()
     {
 
@@ -87,14 +92,14 @@ class Api
         if ($receivers instanceof Receiver) {
             $aReceivers[] = $receivers->toArray();
         }
-        if (is_array($receivers)) {
+        if (\is_array($receivers)) {
             foreach ((array)$receivers as $receiver) {
                 if ($receiver instanceof Receiver) {
                     $aReceivers[] = $receivers->toArray();
                 }
             }
         }
-        if (is_string($receivers)) {
+        if (\is_string($receivers)) {
             $aReceivers[] = (new Receiver($receivers))->toArray();
         }
 
@@ -102,7 +107,7 @@ class Api
             $return = $this->rest->post('/groups.json/' . $groupId . '/receivers/insert',
                 $aReceivers
             );
-            if (is_object($return) && $return->status === 'insert success') {
+            if (\is_object($return) && $return->status === 'insert success') {
                 return true;
             }
         } catch (\Exception $ex) {
@@ -256,7 +261,6 @@ class Api
     {
         $this->connect();
 
-
         if ($groupId === null || $groupId === '') {
             $groupId = $this->configurationService->getGroupId();
         }
@@ -278,7 +282,14 @@ class Api
                     'doidata' => $doidata,
                 ]
             );
+
         } catch (\Exception $ex) {
+
+            if ($ex->getCode() === 404) {
+                // CleverReach sends 404
+
+            }
+
             $this->log($ex);
         }
 

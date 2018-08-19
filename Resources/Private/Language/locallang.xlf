@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-02-03T22:04:04Z" product-name="cleverreach">
+		<header/>
+		<body>
+			<trans-unit id="validator.alreadyInList">
+				<source>This email address is already in this list.</source>
+			</trans-unit>
+			<trans-unit id="validator.notInList">
+				<source>This email address is not in this list.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

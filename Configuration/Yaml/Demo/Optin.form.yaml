@@ -12,11 +12,6 @@ finishers:
       groupId: ''
       mode: Optin
     identifier: Cleverreach
-  -
-    options:
-      pageUid: '28'
-      additionalParameters: ''
-    identifier: Redirect
 renderables:
   -
     renderingOptions:
@@ -54,3 +49,5 @@ renderables:
             identifier: NotEmpty
           -
             identifier: EmailAddress
+          -
+            identifier: CleverReachOptIn
