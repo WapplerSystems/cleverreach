@@ -67,12 +67,14 @@ class CleverreachFinisher extends AbstractFinisher
         foreach ($formValues as $identifier => $value) {
 
             $element = $this->finisherContext->getFormRuntime()->getFormDefinition()->getElementByIdentifier($identifier);
-            $properties = $element->getProperties();
-            if (isset($properties['cleverreachField'])) {
-                if ($properties['cleverreachField'] === 'email') {
-                    $email = $value;
-                } else {
-                    $attributes[$properties['cleverreachField']] = $value;
+            if ($element) {
+                $properties = $element->getProperties();
+                if (isset($properties['cleverreachField'])) {
+                    if ($properties['cleverreachField'] === 'email') {
+                        $email = $value;
+                    } else {
+                        $attributes[$properties['cleverreachField']] = $value;
+                    }
                 }
             }
         }
