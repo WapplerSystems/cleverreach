@@ -89,7 +89,7 @@ class CleverreachFinisher extends AbstractFinisher
 
             } else if (\strtolower($this->options['mode']) === Api::MODE_OPTOUT) {
 
-                $this->api->sendUnsubscribeMail($email);
+                $this->api->sendUnsubscribeMail($email, $formId, $groupId);
 
             }
 
