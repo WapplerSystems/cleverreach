@@ -60,7 +60,9 @@ class CleverreachFinisher extends AbstractFinisher
 
         if (empty($groupId) || empty($formId)) throw new FinisherException('Form ID or Group ID not set.');
 
-        $email = null;
+        $email = '';
+        $connectToAPI = false;
+        $hasActivatorField = false;
         $attributes = [];
 
 
@@ -76,10 +78,23 @@ class CleverreachFinisher extends AbstractFinisher
                         $attributes[$properties['cleverreachField']] = $value;
                     }
                 }
+                
+                if($properties['cleverreachActivatorField'] === true) {
+                    $hasActivatorField = true;
+                    
+                    if($value == '1') {
+                        $connectToAPI = true;
+                    }
+                    
+                }
             }
         }
-
-        if (isset($this->options['mode']) && \strlen($email) > 0) {
+        
+        if(!$hasActivatorField) {
+            $connectToAPI = true;
+        }
+        
+        if (isset($this->options['mode']) && \strlen($email) > 0 && $connectToAPI === true) {
 
             if (\strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
