@@ -55,3 +55,9 @@ renderables:
         type: Textarea
         identifier: textarea-1
         label: Mitteilung
+      -
+        properties:
+          cleverreachActivatorField: true
+        type: Checkbox
+        identifier: newsletter
+        label: 'Newsletter abonnieren'
