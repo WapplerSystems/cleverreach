@@ -22,7 +22,7 @@ class Api
 
     /**
      * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $configurationService;
 
