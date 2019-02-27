@@ -20,14 +20,14 @@ class CleverReach extends AbstractFinisher
 
     /**
      * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $api;
 
 
     /**
      * @var \In2code\Powermail\Domain\Repository\MailRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $mailRepository;
 
@@ -36,7 +36,7 @@ class CleverReach extends AbstractFinisher
     /**
      * Because of T3 7 compatibility use this class
      * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $typoScriptService;
 
@@ -61,7 +61,7 @@ class CleverReach extends AbstractFinisher
 
     /**
      * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $configurationService;
     
