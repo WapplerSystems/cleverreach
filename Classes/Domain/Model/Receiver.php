@@ -87,7 +87,7 @@ class Receiver
             'deactivated' => $this->deactivated,
             'registered' => $this->registered,
             'attributes' => $this->attributes,
-            'global_attributes' => $this->attributes,
+            'global_attributes' => $this->globalAttributes,
             'source' => 'TYPO3',
         ];
     }
