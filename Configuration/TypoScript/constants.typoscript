@@ -20,4 +20,11 @@ plugin.tx_cleverreach {
     
     # cat=plugin.tx_cleverreach//e; type=int; label=Debug mode
     debug = 0
+
+    # cat=plugin.tx_cleverreach//g; type=string; label=Token url
+    oauthTokenUrl = https://rest.cleverreach.com/oauth/token.php
+    # cat=plugin.tx_cleverreach//g; type=string; label=OAuth clientID (Alternatively, you can use 'OAuth  client id' and 'OAuth client secret' instead login/password)
+    oauthClientId =
+    # cat=plugin.tx_cleverreach//g; type=string; label=Client secret (Alternatively, you can use 'client secret' and 'token' instead login/password)
+    oauthClientSecret =
 }
