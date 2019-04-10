@@ -63,12 +63,18 @@ class CleverreachFinisher extends AbstractFinisher
         $email = null;
         $attributes = [];
 
+        $actionIsTriggered = empty($this->options['trigger']);
 
         foreach ($formValues as $identifier => $value) {
 
             $element = $this->finisherContext->getFormRuntime()->getFormDefinition()->getElementByIdentifier($identifier);
             if ($element) {
                 $properties = $element->getProperties();
+                if (!$actionIsTriggered && $identifier === $this->options['trigger']) {
+                    if (!empty($value)) {
+                        $actionIsTriggered = true;
+                    }
+                }
                 if (isset($properties['cleverreachField'])) {
                     if ($properties['cleverreachField'] === 'email') {
                         $email = $value;
@@ -81,7 +87,7 @@ class CleverreachFinisher extends AbstractFinisher
 
         if (isset($this->options['mode']) && \strlen($email) > 0) {
 
-            if (\strtolower($this->options['mode']) === Api::MODE_OPTIN) {
+            if (\strtolower($this->options['mode']) === Api::MODE_OPTIN && $actionIsTriggered) {
 
                 $receiver = new Receiver($email, $attributes);
                 $this->api->addReceiversToGroup($receiver, $groupId);

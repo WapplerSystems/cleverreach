@@ -1,0 +1,60 @@
+
+renderingOptions:
+  submitButtonLabel: Senden
+  cleverreachmode: Optin
+identifier: clvrcontact
+label: 'CleverReach Contact'
+type: Form
+prototypeName: standard
+finishers:
+  -
+    options:
+      mode: Optin
+      trigger: newsletter
+    identifier: Cleverreach
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: 'previous Page'
+      nextButtonLabel: 'next Page'
+    identifier: page-1
+    label: 'Double Optin Formular'
+    type: Page
+    renderables:
+      -
+        defaultValue: ''
+        identifier: name
+        label: Name
+        type: Text
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: Name
+            required: required
+          cleverreachField: name
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        defaultValue: ''
+        identifier: email
+        label: Email
+        type: Text
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: 'Email address'
+            required: required
+          cleverreachField: email
+        validators:
+          -
+            identifier: NotEmpty
+          -
+            identifier: EmailAddress
+      -
+        defaultValue: ''
+        type: Textarea
+        identifier: textarea-1
+        label: Mitteilung
+      -
+        identifier: newsletter
+        type: Checkbox
+        label: Subscribe for newsletter
