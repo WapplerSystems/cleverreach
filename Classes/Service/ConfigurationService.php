@@ -1,6 +1,8 @@
 <?php
 namespace WapplerSystems\Cleverreach\Service;
 
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+
 /**
  * This file is part of the "cleverreach" Extension for TYPO3 CMS.
  *
@@ -17,17 +19,17 @@ class ConfigurationService {
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $objectManager;
 
 
     public function getConfiguration() {
 
-        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager */
-        $configurationManager = $this->objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface');
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
         $settings = $configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             'cleverreach'
         );
         return $settings['plugin.']['tx_cleverreach.']['settings.'];

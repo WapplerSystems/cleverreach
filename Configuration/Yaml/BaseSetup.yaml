@@ -12,16 +12,61 @@ TYPO3:
       prototypes:
         standard:
 
+          validatorsDefinition:
+            CleverReachOptIn:
+              implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
+            CleverReachOptOut:
+              implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
+
           formElementsDefinition:
 
             Text:
               formEditor:
                 editors:
                   900:
+                    selectOptions:
+                      190:
+                        value: 'CleverReachOptIn'
+                        label: 'CleverReach Opt In'
+                      191:
+                        value: 'CleverReachOptOut'
+                        label: 'CleverReach Opt Out'
+
+                  1900:
                     identifier: 'cleverreachField'
                     templateName: 'Inspector-TextEditor'
                     label: 'CleverReach field'
                     propertyPath: 'properties.cleverreachField'
+
+                propertyCollections:
+                  validators:
+                    190:
+                      identifier: 'CleverReachOptIn'
+                      editors:
+                        100:
+                          identifier: 'header'
+                          templateName: 'Inspector-CollectionElementHeaderEditor'
+                          label: 'CleverReach Opt In'
+                        200:
+                          identifier: 'groupId'
+                          templateName: 'Inspector-TextEditor'
+                          label: 'Group ID'
+                          propertyPath: 'options.groupId'
+                        9999:
+                          identifier: 'removeButton'
+                          templateName: 'Inspector-RemoveElementEditor'
+
+                    191:
+                      identifier: 'CleverReachOptOut'
+                      editors:
+                        100:
+                          identifier: 'header'
+                          templateName: 'Inspector-CollectionElementHeaderEditor'
+                          label: 'CleverReach Opt Out'
+                        9999:
+                          identifier: 'removeButton'
+                          templateName: 'Inspector-RemoveElementEditor'
+
 
             GenderSelect:
               __inheritances:
@@ -32,8 +77,6 @@ TYPO3:
                 options:
                   f: 'Female'
                   m: 'Male'
-                  u: 'Unicorn'
-                  a: 'Alien'
 
             Form:
               formEditor:
@@ -88,14 +131,14 @@ TYPO3:
               implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
-                label: CleverReach
+                label: 'CleverReach'
                 predefinedDefaults:
                   options:
                     formId: ''
                     groupId: ''
 
               FormEngine:
-                label: CleverReach
+                label: 'CleverReach'
                 elements:
                   formId:
                     label: 'Form ID'

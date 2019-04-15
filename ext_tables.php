@@ -4,9 +4,8 @@ if (!defined ('TYPO3_MODE')) {
 }
 
 //# Add page TSConfig
-$pageTsConfig = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TypoScript/TsConfig/Page/powermail.ts');
+$pageTsConfig = '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cleverreach/Configuration/TypoScript/TSconfig/Page/powermail.tsconfig">';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig($pageTsConfig);
-
 
 
 

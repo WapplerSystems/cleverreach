@@ -14,7 +14,7 @@ class OptoutValidator
 
     /**
      * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $api;
 
