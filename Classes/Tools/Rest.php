@@ -251,6 +251,16 @@ class Rest
 
         $this->debugValues->header = $header;
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+
+        // Set Proxy if configured (TYPO3 9.5)
+        if ($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy']) {
+            curl_setopt($curl, CURLOPT_PROXY, $GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy']);
+        }
+
+        // Set Proxy if configured (TYPO3 7.6 and 8.7)
+        if ($GLOBALS['TYPO3_CONF_VARS']['SYS']['curlProxyServer']) {
+            curl_setopt($curl, CURLOPT_PROXY, $GLOBALS['TYPO3_CONF_VARS']['SYS']['curlProxyServer']);
+        }
     }
 
     /**
