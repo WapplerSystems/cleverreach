@@ -39,6 +39,8 @@ class Api
 
     const MODE_OPTOUT = 'optout';
 
+    const ATTRIBUTES_GLOBAL = 'global';
+
 
     public function __construct()
     {
