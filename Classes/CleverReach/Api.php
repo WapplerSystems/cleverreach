@@ -22,6 +22,7 @@ class Api
 
     /**
      * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
+     * @inject
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $configurationService;
@@ -139,11 +140,11 @@ class Api
             $this->log($ex);
         }
     }
-    
-    
+
+
     /**
      * Sets receiver state to inactive
-     * 
+     *
      * @param mixed $receivers
      * @param int $groupId
      */

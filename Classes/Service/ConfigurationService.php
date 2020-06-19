@@ -18,6 +18,7 @@ class ConfigurationService {
 
 
     /**
+     * @inject
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
