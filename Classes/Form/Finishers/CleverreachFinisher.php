@@ -70,10 +70,18 @@ class CleverreachFinisher extends AbstractFinisher
             if ($element) {
                 $properties = $element->getProperties();
                 if (isset($properties['cleverreachField'])) {
-                    if ($properties['cleverreachField'] === 'email') {
-                        $email = $value;
-                    } else {
-                        $attributes[$properties['cleverreachField']] = $value;
+                    switch ($properties['cleverreachField'] ) {
+                        case 'email':
+                            $email = $value;
+                            break;
+                        case 'formId':
+                            $formId = $value;
+                            break;
+                        case 'groupId':
+                            $groupId = $value;
+                            break;
+                        default:
+                            $attributes[$properties['cleverreachField']] = $value;
                     }
                 }
             }
