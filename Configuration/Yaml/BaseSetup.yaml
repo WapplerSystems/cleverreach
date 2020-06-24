@@ -37,6 +37,16 @@ TYPO3:
                     templateName: 'Inspector-TextEditor'
                     label: 'CleverReach field'
                     propertyPath: 'properties.cleverreachField'
+            Checkbox:
+              formEditor:
+                editors:
+                  1549335643:
+                    identifier: 'cleverreachActivatorField'
+                    templateName: 'Inspector-CheckboxEditor'
+                    label: 'Is CleverReach Activator Field?'
+                    propertyPath: 'properties.cleverreachActivatorField'
+                    fieldExplanationText: |
+                      If you activate this option, the Cleverreach API is onlyk called if the user checks the Checkbox in the Frontend Form.
 
                 propertyCollections:
                   validators:
