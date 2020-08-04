@@ -1,9 +1,7 @@
 module.tx_form {
     settings {
         yamlConfigurations {
-            80 = EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml
-
-            90 = EXT:cleverreach/Configuration/Yaml/Demo/Optin.form.yaml
+            43646 = EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml
         }
     }
     view {
