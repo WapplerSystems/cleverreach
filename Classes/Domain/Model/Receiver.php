@@ -2,6 +2,7 @@
 
 namespace WapplerSystems\Cleverreach\Domain\Model;
 
+
 /**
  * This file is part of the "cleverreach" Extension for TYPO3 CMS.
  *
@@ -72,7 +73,6 @@ class Receiver
     {
         $this->email = $email;
         $this->attributes = $attributes;
-        $this->globalAttributes = $attributes;
         $this->registered = time();
     }
 
@@ -105,6 +105,7 @@ class Receiver
         $inst->activated = $obj->activated;
         $inst->deactivated = $obj->deactivated;
         $inst->attributes = (array)$obj->attributes;
+        $inst->globalAttributes = (array)$obj->global_attributes;
         return $inst;
     }
 
