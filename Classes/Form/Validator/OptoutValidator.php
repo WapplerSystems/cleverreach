@@ -16,8 +16,8 @@ namespace WapplerSystems\Cleverreach\Form\Validator;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use WapplerSystems\Cleverreach\Service\ConfigurationService;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use WapplerSystems\Cleverreach\Service\ConfigurationService;
 
 /**
  * Validator for email addresses
