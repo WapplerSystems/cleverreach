@@ -17,4 +17,11 @@ call_user_func(function () {
         'Configuration/TypoScript/Powermail/',
         'CleverReach Powermail'
     );
+
 });
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile(
+    'cleverreach',
+    'Configuration/TsConfig/Page/powermail.tsconfig',
+    'Powermail'
+);
