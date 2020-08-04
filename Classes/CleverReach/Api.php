@@ -10,10 +10,10 @@ namespace WapplerSystems\Cleverreach\CleverReach;
  */
 
 
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 use WapplerSystems\Cleverreach\Tools\Rest;
-use TYPO3\CMS\Core\Log\LogManager;
 
 
 class Api
@@ -158,6 +158,28 @@ class Api
 
         try {
             $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setinactive');
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
+    }
+
+
+    /**
+     * Sets receiver state to inactive
+     *
+     * @param mixed $receivers
+     * @param int $groupId
+     */
+    public function activateReceiversInGroup($receivers, $groupId = null)
+    {
+        $this->connect();
+
+        if ($groupId === null) {
+            $groupId = $this->configurationService->getGroupId();
+        }
+
+        try {
+            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setactive');
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -341,6 +363,36 @@ class Api
     {
 
         $this->logger->info($ex->getMessage());
+
+    }
+
+
+    public function setAttributeOfReceiver($email,$attributeId,$value) {
+        $this->connect();
+        try {
+            $this->rest->put('/receivers.json/'.$email.'/attributes/'.$attributeId,
+                [
+                    'value' => $value,
+                ]
+            );
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
+
+    }
+
+
+    public function deleteReceiver($email,$groupId = null) {
+        $this->connect();
+        try {
+            $this->rest->delete('/receivers.json/'.$email.'',
+                [
+                    'group_id' => $groupId,
+                ]
+            );
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
 
     }
 
