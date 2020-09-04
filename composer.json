@@ -4,6 +4,7 @@
     "type": "typo3-cms-extension",
     "homepage": "http://wappler.systems",
     "license": "GPL-2.0-or-later",
+    "version": "0.1.7",
     "require": {
         "typo3/cms-core": "^7.6 || ^8.7 || ^9.5 || ^10.4"
     },
