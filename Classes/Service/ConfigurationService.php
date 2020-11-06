@@ -95,4 +95,28 @@ class ConfigurationService {
         return $config['unsubscribemethod'];
     }
 
+    /**
+     * @return string
+     */
+    public function getOAuthTokenUrl() {
+        $config = $this->getConfiguration();
+        return $config['oauthTokenUrl'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOAuthClientId() {
+        $config = $this->getConfiguration();
+        return $config['oauthClientId'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOAuthClientSecret() {
+
+        $config = $this->getConfiguration();
+        return $config['oauthClientSecret'];
+    }
 }

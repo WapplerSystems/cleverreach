@@ -57,14 +57,36 @@ class Api
         $this->rest = new Rest($this->configurationService->getRestUrl());
 
         try {
-            //skip this part if you have an OAuth access token
-            $token = $this->rest->post('/login',
-                [
-                    'client_id' => $this->configurationService->getClientId(),
-                    'login' => $this->configurationService->getLoginName(),
-                    'password' => $this->configurationService->getPassword()
-                ]
-            );
+            $token = '';
+
+            if (!empty($this->configurationService->getOAuthClientId()) && !empty($this->configurationService->getOAuthClientSecret())) {
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL, $this->configurationService->getOAuthTokenUrl());
+                curl_setopt($curl, CURLOPT_USERPWD, $this->configurationService->getOAuthClientId() . ":" . $this->configurationService->getOAuthClientSecret());
+                curl_setopt($curl, CURLOPT_POSTFIELDS, ["grant_type" => "client_credentials"]);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                $result = curl_exec($curl);
+                curl_close ($curl);
+
+                if ($result) {
+                    $data = json_decode($result);
+
+                    if (!empty($data->access_token)) {
+                        $token = $data->access_token;
+                    }
+                }
+            }
+
+            if (empty($token)) {
+                //skip this part if you have an OAuth access token
+                $token = $this->rest->post('/login',
+                    [
+                        'client_id' => $this->configurationService->getClientId(),
+                        'login' => $this->configurationService->getLoginName(),
+                        'password' => $this->configurationService->getPassword()
+                    ]
+                );
+            }
             $this->rest->setAuthMode('bearer', $token);
         } catch (\Exception $ex) {
             $this->log($ex);
@@ -107,6 +129,11 @@ class Api
             $return = $this->rest->post('/groups.json/' . $groupId . '/receivers/insert',
                 $aReceivers
             );
+
+            if (is_array($return) && !empty($return)) {
+                $return = $return[0];
+            }
+
             if (\is_object($return) && $return->status === 'insert success') {
                 return true;
             }
