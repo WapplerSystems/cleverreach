@@ -62,6 +62,7 @@ class CleverreachFinisher extends AbstractFinisher
 
         $email = null;
         $attributes = [];
+        $globalAttributes = [];
 
 
         foreach ($formValues as $identifier => $value) {
@@ -73,7 +74,12 @@ class CleverreachFinisher extends AbstractFinisher
                     if ($properties['cleverreachField'] === 'email') {
                         $email = $value;
                     } else {
-                        $attributes[$properties['cleverreachField']] = $value;
+
+                        if(API::ATTRIBUTES_GLOBAL === strtolower($properties['cleverreachAttributeLocalization'] ?? '')) {
+                            $globalAttributes[$properties['cleverreachField']] = $value;
+                        } else {
+                            $attributes[$properties['cleverreachField']] = $value;
+                        }
                     }
                 }
             }
@@ -83,7 +89,7 @@ class CleverreachFinisher extends AbstractFinisher
 
             if (\strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
-                $receiver = new Receiver($email, $attributes);
+                $receiver = new Receiver($email, $attributes, $globalAttributes);
                 $this->api->addReceiversToGroup($receiver, $groupId);
                 $this->api->sendSubscribeMail($email, $formId, $groupId);
 

@@ -68,11 +68,13 @@ class Receiver
      * Receiver constructor.
      * @param string $email
      * @param array $attributes
+     * @param array $globalAttributes
      */
-    public function __construct($email, $attributes = null)
+    public function __construct($email, $attributes = [], $globalAttributes = [])
     {
         $this->email = $email;
         $this->attributes = $attributes;
+        $this->globalAttributes = $globalAttributes;
         $this->registered = time();
     }
 
