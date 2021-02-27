@@ -3,7 +3,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'CleverReach',
     'description' => 'Finishers and validators for EXT:form and Powermail',
     'category' => 'misc',
-    'state' => 'beta',
+    'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '0.1.8-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-10.4.999',
+            'typo3' => '9.5.0-10.4.99',
             'php' => '7.0.0-7.4.99',
         ],
         'conflicts' => [],
