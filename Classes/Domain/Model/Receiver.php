@@ -74,6 +74,7 @@ class Receiver
         $this->email = $email;
         $this->attributes = $attributes;
         $this->registered = time();
+        $this->activated = time();
     }
 
 
