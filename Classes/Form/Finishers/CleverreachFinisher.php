@@ -12,6 +12,7 @@ namespace WapplerSystems\Cleverreach\Form\Finishers;
  */
 
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
@@ -79,15 +80,15 @@ class CleverreachFinisher extends AbstractFinisher
             }
         }
 
-        if (isset($this->options['mode']) && \strlen($email) > 0) {
+        if (isset($this->options['mode']) && $email != '') {
 
-            if (\strtolower($this->options['mode']) === Api::MODE_OPTIN) {
+            if (strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
                 $receiver = new Receiver($email, $attributes);
                 $this->api->addReceiversToGroup($receiver, $groupId);
                 $this->api->sendSubscribeMail($email, $formId, $groupId);
 
-            } else if (\strtolower($this->options['mode']) === Api::MODE_OPTOUT) {
+            } else if (strtolower($this->options['mode']) === Api::MODE_OPTOUT) {
 
                 $this->api->sendUnsubscribeMail($email, $formId, $groupId);
 
