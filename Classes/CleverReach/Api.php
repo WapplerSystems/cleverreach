@@ -248,7 +248,6 @@ class Api
         try {
             $return = $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
             return Receiver::createInstance($return);
-
         } catch (\Exception $ex) {
             if ($ex->getCode() !== 404) {
                 $this->log($ex);

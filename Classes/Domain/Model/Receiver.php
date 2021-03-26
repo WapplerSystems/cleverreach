@@ -23,19 +23,19 @@ class Receiver
      * timestamp
      * @var int
      */
-    protected $activated;
+    protected $activated = 0;
 
     /**
      * timestamp
      * @var int
      */
-    protected $registered;
+    protected $registered = 0;
 
     /**
      * timestamp
      * @var int
      */
-    protected $deactivated;
+    protected $deactivated = 0;
 
     /**
      * @var string
@@ -116,7 +116,7 @@ class Receiver
      */
     public function isActive(): bool
     {
-        return ($this->activated !== null && $this->deactivated === null);
+        return ($this->activated !== 0 && $this->deactivated === 0);
     }
 
     /**
@@ -136,9 +136,9 @@ class Receiver
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getActivated(): ?int
+    public function getActivated(): int
     {
         return $this->activated;
     }
@@ -152,9 +152,9 @@ class Receiver
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getRegistered(): ?int
+    public function getRegistered(): int
     {
         return $this->registered;
     }
@@ -168,9 +168,9 @@ class Receiver
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getDeactivated(): ?int
+    public function getDeactivated(): int
     {
         return $this->deactivated;
     }
