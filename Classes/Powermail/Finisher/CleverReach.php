@@ -64,8 +64,8 @@ class CleverReach extends AbstractFinisher
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $configurationService;
-    
-    
+
+
     /**
      *
      * @return void
