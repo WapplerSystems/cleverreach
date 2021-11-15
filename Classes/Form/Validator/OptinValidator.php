@@ -33,6 +33,12 @@ class OptinValidator extends AbstractValidator
      */
     protected $api;
 
+    /**
+     * @var array
+     */
+    protected $supportedOptions = [
+        'groupId' => ['', 'The groupId', 'string', false]
+    ];
 
     /**
      * Checks if the given value is already in the list
