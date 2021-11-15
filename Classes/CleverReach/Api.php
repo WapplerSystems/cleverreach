@@ -139,11 +139,11 @@ class Api
             $this->log($ex);
         }
     }
-    
-    
+
+
     /**
      * Sets receiver state to inactive
-     * 
+     *
      * @param mixed $receivers
      * @param int $groupId
      */
