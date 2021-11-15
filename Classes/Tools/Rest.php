@@ -83,6 +83,7 @@ class Rest
             }
         }
 
+        $url = $this->url;
         if($data){
             $url = sprintf("%s?%s", $this->url . $path, ($data ? http_build_query($data) : ""));
         }
