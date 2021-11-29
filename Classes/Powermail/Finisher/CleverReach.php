@@ -34,8 +34,8 @@ class CleverReach extends AbstractFinisher
 
 
     /**
-     * Because of T3 7 compatibility use this class
-     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
+     * 
+     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $typoScriptService;
@@ -119,9 +119,9 @@ class CleverReach extends AbstractFinisher
 
 
     /**
-     * Initialize
+     * @return void
      */
-    public function initializeFinisher()
+    public function initializeFinisher(): void
     {
         $configuration = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
         if (!empty($configuration['dbEntry.'])) {
