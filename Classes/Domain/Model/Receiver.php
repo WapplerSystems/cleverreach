@@ -40,7 +40,7 @@ class Receiver
     /**
      * @var string
      */
-    protected $source = '';
+    protected $source = 'TYPO3';
 
     /**
      * @var array
@@ -90,7 +90,7 @@ class Receiver
             'registered' => $this->registered,
             'attributes' => $this->attributes,
             'global_attributes' => $this->attributes,
-            'source' => 'TYPO3',
+            'source' => $this->source,
         ];
     }
 
