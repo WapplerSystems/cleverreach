@@ -2,13 +2,12 @@
     "name": "svewap/cleverreach",
     "description": "CleverReach finishers and validators for EXT:form and Powermail",
     "type": "typo3-cms-extension",
-    "homepage": "http://wappler.systems",
+    "homepage": "https://wappler.systems",
     "license": "GPL-2.0-or-later",
     "require": {
         "typo3/cms-core": "^9.5 || ^10.4"
     },
     "replace": {
-        "svewap/cleverreach": "self.version"
     },
     "autoload": {
         "psr-4": {
@@ -17,7 +16,6 @@
     },
     "extra": {
         "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
             "extension-key": "cleverreach"
         }
     }
