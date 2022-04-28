@@ -1,6 +1,7 @@
 <?php
 namespace WapplerSystems\Cleverreach\Service;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
@@ -17,17 +18,9 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class ConfigurationService {
 
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $objectManager;
-
-
     public function getConfiguration() {
 
-        /** @var ConfigurationManagerInterface $configurationManager */
-        $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
         $settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             'cleverreach'
