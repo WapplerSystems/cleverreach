@@ -6,3 +6,6 @@ services:
 
   WapplerSystems\Cleverreach\Service\ConfigurationService:
     public: true
+
+  WapplerSystems\Cleverreach\CleverReach\Api:
+    public: true
