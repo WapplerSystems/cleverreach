@@ -27,13 +27,6 @@ class CleverreachFinisher extends AbstractFinisher
 {
 
     /**
-     * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $api;
-
-
-    /**
      * @var array
      */
     protected $defaultOptions = [
@@ -52,9 +45,10 @@ class CleverreachFinisher extends AbstractFinisher
         $formValues = $this->getFormValues();
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationService::class);
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
+        $api = GeneralUtility::makeInstance(Api::class);
 
         $groupId = isset($this->options['groupId']) && \strlen($this->options['groupId']) > 0 ? $this->options['groupId'] : $configuration['groupId'];
         $formId = isset($this->options['formId']) && \strlen($this->options['formId']) > 0 ? $this->options['formId'] : $configuration['formId'];
@@ -85,12 +79,12 @@ class CleverreachFinisher extends AbstractFinisher
             if (strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
                 $receiver = new Receiver($email, $attributes);
-                $this->api->addReceiversToGroup($receiver, $groupId);
-                $this->api->sendSubscribeMail($email, $formId, $groupId);
+                $api->addReceiversToGroup($receiver, $groupId);
+                $api->sendSubscribeMail($email, $formId, $groupId);
 
             } else if (strtolower($this->options['mode']) === Api::MODE_OPTOUT) {
 
-                $this->api->sendUnsubscribeMail($email, $formId, $groupId);
+                $api->sendUnsubscribeMail($email, $formId, $groupId);
 
             }
 
