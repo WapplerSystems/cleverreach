@@ -33,6 +33,11 @@ class OptinValidator extends AbstractValidator
      */
     protected $api;
 
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
 
     /**
      * Checks if the given value is already in the list
@@ -44,7 +49,7 @@ class OptinValidator extends AbstractValidator
     {
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationService::class);
+        $configurationService = $this->objectManager->get(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
         $groupId = isset($this->options['groupId']) && \strlen($this->options['groupId']) > 0 ? $this->options['groupId'] : $configuration['groupId'];

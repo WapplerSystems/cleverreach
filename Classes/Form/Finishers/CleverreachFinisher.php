@@ -39,6 +39,11 @@ class CleverreachFinisher extends AbstractFinisher
     protected $defaultOptions = [
     ];
 
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
 
     /**
      * Executes this finisher
@@ -52,7 +57,7 @@ class CleverreachFinisher extends AbstractFinisher
         $formValues = $this->getFormValues();
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationService::class);
+        $configurationService = $this->objectManager->get(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
 

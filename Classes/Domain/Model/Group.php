@@ -49,6 +49,7 @@ class Group
      */
     public function getId(): int
     {
+        //@extensionScannerIgnoreLine
         return $this->id;
     }
 

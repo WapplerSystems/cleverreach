@@ -52,6 +52,7 @@ class Order
      */
     public function getId(): string
     {
+        //@extensionScannerIgnoreLine
         return $this->id;
     }
 
