@@ -39,7 +39,6 @@ class CleverReach extends AbstractFinisher
     protected $name = '';
 
 
-
     /**
      *
      * @return void

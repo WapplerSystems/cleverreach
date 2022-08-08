@@ -10,15 +10,11 @@ namespace WapplerSystems\Cleverreach\Powermail\Validator;
 
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use WapplerSystems\Cleverreach\CleverReach\Api;
 
 class OptinValidator
 {
 
-    /**
-     * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $api;
 
     /**
      * Check if given number is higher than in configuration
@@ -34,7 +30,8 @@ class OptinValidator
         if (!GeneralUtility::validEmail($value)) {
             return FALSE;
         }
-        return !$this->api->isReceiverOfGroupAndActive($value);
+        $api = GeneralUtility::makeInstance(Api::class);
+        return !$api->isReceiverOfGroupAndActive($value);
     }
 
 
