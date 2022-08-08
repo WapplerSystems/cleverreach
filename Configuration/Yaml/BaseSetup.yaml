@@ -5,8 +5,8 @@ TYPO3:
       persistenceManager:
         allowedExtensionPaths:
           8686: EXT:cleverreach/Resources/Private/Forms/
-        allowSaveToExtensionPaths: true
-        allowDeleteFromExtensionPaths: true
+        allowSaveToExtensionPaths: false
+        allowDeleteFromExtensionPaths: false
 
       prototypes:
         standard:

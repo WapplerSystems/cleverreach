@@ -1,4 +1,5 @@
 <?php
+
 namespace WapplerSystems\Cleverreach\Form\Validator;
 
 /*
@@ -42,14 +43,14 @@ class OptinValidator extends AbstractValidator
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $groupId = isset($this->options['groupId']) && \strlen($this->options['groupId']) > 0 ? $this->options['groupId'] : $configuration['groupId'];
+        $groupId = ($this->options['groupId'] ?? '') ? $this->options['groupId'] : $configuration['groupId'];
 
         if (empty($groupId)) {
-            $this->addError('Group ID not set.',1534719428);
+            $this->addError('Group ID not set.', 1534719428);
             return;
         }
 
-        if ($api->isReceiverOfGroupAndActive($value,$groupId)) {
+        if ($api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.alreadyInList',

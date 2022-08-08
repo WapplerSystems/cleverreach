@@ -138,11 +138,11 @@ class Api
             $this->log($ex);
         }
     }
-    
-    
+
+
     /**
      * Sets receiver state to inactive
-     * 
+     *
      * @param mixed $receivers
      * @param int $groupId
      */
@@ -235,7 +235,7 @@ class Api
      * @param int $groupId
      * @return Receiver
      */
-    public function getReceiverOfGroup($id, $groupId = null)
+    public function getReceiverOfGroup($id, $groupId = null): ?Receiver
     {
         $this->connect();
 
@@ -262,8 +262,6 @@ class Api
      */
     public function isReceiverOfGroupAndActive($id, $groupId = null): bool
     {
-
-
         $receiver = $this->getReceiverOfGroup($id, $groupId);
         if ($receiver !== null) {
             return $receiver->isActive();
@@ -277,7 +275,7 @@ class Api
      * @param int $formId
      * @param int $groupId
      */
-    public function sendSubscribeMail($email, $formId = null, $groupId = null)
+    public function sendSubscribeMail($email, $formId = null, $groupId = null): void
     {
         $this->connect();
 
@@ -322,7 +320,7 @@ class Api
      * @param int $formId
      * @param int $groupId
      */
-    public function sendUnsubscribeMail($email, $formId = null, $groupId = null)
+    public function sendUnsubscribeMail($email, $formId = null, $groupId = null): void
     {
         $this->connect();
 
@@ -356,7 +354,7 @@ class Api
     }
 
 
-    private function log(\Exception $ex)
+    private function log(\Exception $ex): void
     {
 
         $this->logger->info($ex->getMessage());
@@ -364,10 +362,11 @@ class Api
     }
 
 
-    public function setAttributeOfReceiver($email,$attributeId,$value) {
+    public function setAttributeOfReceiver($email, $attributeId, $value): void
+    {
         $this->connect();
         try {
-            $this->rest->put('/receivers.json/'.$email.'/attributes/'.$attributeId,
+            $this->rest->put('/receivers.json/' . $email . '/attributes/' . $attributeId,
                 [
                     'value' => $value,
                 ]
@@ -379,10 +378,11 @@ class Api
     }
 
 
-    public function deleteReceiver($email,$groupId = null) {
+    public function deleteReceiver($email, $groupId = null): void
+    {
         $this->connect();
         try {
-            $this->rest->delete('/receivers.json/'.$email.'',
+            $this->rest->delete('/receivers.json/' . $email . '',
                 [
                     'group_id' => $groupId,
                 ]

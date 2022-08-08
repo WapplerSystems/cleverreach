@@ -12,34 +12,14 @@ namespace WapplerSystems\Cleverreach\Powermail\Finisher;
 use In2code\Powermail\Domain\Model\Answer;
 use In2code\Powermail\Domain\Model\Mail;
 use In2code\Powermail\Finisher\AbstractFinisher;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WapplerSystems\Cleverreach\CleverReach\Api;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
+use WapplerSystems\Cleverreach\Service\ConfigurationService;
 
 class CleverReach extends AbstractFinisher
 {
-
-    /**
-     * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $api;
-
-
-    /**
-     * @var \In2code\Powermail\Domain\Repository\MailRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $mailRepository;
-
-
-
-    /**
-     * Because of T3 7 compatibility use this class
-     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $typoScriptService;
-
 
     /**
      * @var array
@@ -59,13 +39,7 @@ class CleverReach extends AbstractFinisher
     protected $name = '';
 
 
-    /**
-     * @var \WapplerSystems\Cleverreach\Service\ConfigurationService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $configurationService;
-    
-    
+
     /**
      *
      * @return void
@@ -74,6 +48,9 @@ class CleverReach extends AbstractFinisher
     {
 
         if ($this->email === '') return;
+
+        $api = GeneralUtility::makeInstance(Api::class);
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
         $formValues = $this->getFormValues($this->getMail());
 
@@ -92,22 +69,22 @@ class CleverReach extends AbstractFinisher
         if ($this->settings['main']['cleverreach'] === Api::MODE_OPTIN) {
 
             $receiver = new Receiver($this->email,$formValues);
-            $this->api->addReceiversToGroup($receiver,$groupId);
-            $this->api->sendSubscribeMail($this->email,$formId,$groupId);
+            $api->addReceiversToGroup($receiver,$groupId);
+            $api->sendSubscribeMail($this->email,$formId,$groupId);
 
         } else if ($this->settings['main']['cleverreach'] === Api::MODE_OPTOUT) {
 
-            if ($this->configurationService->getUnsubscribeMethod() === 'doubleoptout') {
+            if ($configurationService->getUnsubscribeMethod() === 'doubleoptout') {
 
-                $this->api->sendUnsubscribeMail($this->email);
+                $api->sendUnsubscribeMail($this->email);
 
-            } else if ($this->configurationService->getUnsubscribeMethod() === 'delete') {
+            } else if ($configurationService->getUnsubscribeMethod() === 'delete') {
 
-                $this->api->removeReceiversFromGroup($this->email);
+                $api->removeReceiversFromGroup($this->email);
 
             } else {
 
-                $this->api->disableReceiversInGroup($this->email, $groupId);
+                $api->disableReceiversInGroup($this->email, $groupId);
 
             }
 
@@ -121,9 +98,10 @@ class CleverReach extends AbstractFinisher
     /**
      * Initialize
      */
-    public function initializeFinisher()
+    public function initializeFinisher(): void
     {
-        $configuration = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
+        $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
+        $configuration = $typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
         if (!empty($configuration['dbEntry.'])) {
             $this->configuration = $configuration['dbEntry.'];
         }

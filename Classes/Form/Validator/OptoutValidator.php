@@ -1,4 +1,5 @@
 <?php
+
 namespace WapplerSystems\Cleverreach\Form\Validator;
 
 /*
@@ -30,7 +31,6 @@ class OptoutValidator extends AbstractValidator
 
     /**
      * @var \WapplerSystems\Cleverreach\CleverReach\Api
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $api;
 
@@ -45,17 +45,17 @@ class OptoutValidator extends AbstractValidator
     {
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationService::class);
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
-        $groupId = isset($this->options['groupId']) && \strlen($this->options['groupId']) > 0 ? $this->options['groupId'] : $configuration['groupId'];
+        $groupId = ($this->options['groupId'] ?? '') !== '' ? $this->options['groupId'] : $configuration['groupId'];
 
         if (empty($groupId)) {
-            $this->addError('Group ID not set.',1534719428);
+            $this->addError('Group ID not set.', 1534719428);
             return;
         }
 
-        if (!$this->api->isReceiverOfGroupAndActive($value,$groupId)) {
+        if (!$this->api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.notInList',

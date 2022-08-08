@@ -1,24 +1,24 @@
 plugin.tx_form {
-    view {
-        # Note that this configuration only affects the EXT:Form plugin
-        # template (form/Resources/Private/Frontend/Templates/Render.html)
-        # The fluid paths for the formelements reside within the yaml settings.
-        # @see TYPO3.CMS.Form.<prototypeName>.standard.formElementsDefinition.Form.renderingOptions
-        #
-        # That means: If you want to override the formelement templates
-        # then change them within the yaml settings, not here.
-        templateRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Templates/
-        partialRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Partials/
-        layoutRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Layouts/
-    }
+  view {
+    # Note that this configuration only affects the EXT:Form plugin
+    # template (form/Resources/Private/Frontend/Templates/Render.html)
+    # The fluid paths for the formelements reside within the yaml settings.
+    # @see TYPO3.CMS.Form.<prototypeName>.standard.formElementsDefinition.Form.renderingOptions
+    #
+    # That means: If you want to override the formelement templates
+    # then change them within the yaml settings, not here.
+    templateRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Templates/
+    partialRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Partials/
+    layoutRootPaths.80 = EXT:cleverreach/Resources/Private/Frontend/Layouts/
+  }
 
-    mvc {
-        callDefaultActionIfActionCantBeResolved = 1
-    }
+  mvc {
+    callDefaultActionIfActionCantBeResolved = 1
+  }
 
-    settings {
-        yamlConfigurations {
-            80 = EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml
-        }
+  settings {
+    yamlConfigurations {
+      80 = EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml
     }
+  }
 }

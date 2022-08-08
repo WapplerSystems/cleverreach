@@ -12,9 +12,7 @@ namespace WapplerSystems\Cleverreach\Form\Finishers;
  */
 
 
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Finishers\Exception\FinisherException;
 use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
@@ -35,9 +33,9 @@ class CleverreachFinisher extends AbstractFinisher
 
     /**
      * Executes this finisher
+     * @throws FinisherException
      * @see AbstractFinisher::execute()
      *
-     * @throws FinisherException
      */
     protected function executeInternal()
     {
@@ -50,8 +48,8 @@ class CleverreachFinisher extends AbstractFinisher
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $groupId = isset($this->options['groupId']) && \strlen($this->options['groupId']) > 0 ? $this->options['groupId'] : $configuration['groupId'];
-        $formId = isset($this->options['formId']) && \strlen($this->options['formId']) > 0 ? $this->options['formId'] : $configuration['formId'];
+        $groupId = ($this->options['groupId'] ?? '') ? $this->options['groupId'] : $configuration['groupId'];
+        $formId = ($this->options['formId'] ?? '') ? $this->options['formId'] : $configuration['formId'];
 
         if (empty($groupId) || empty($formId)) throw new FinisherException('Form ID or Group ID not set.');
 
@@ -74,7 +72,7 @@ class CleverreachFinisher extends AbstractFinisher
             }
         }
 
-        if (isset($this->options['mode']) && $email != '') {
+        if (isset($this->options['mode']) && $email !== '') {
 
             if (strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
@@ -95,7 +93,7 @@ class CleverreachFinisher extends AbstractFinisher
     /**
      * Returns the values of the submitted form
      *
-     * @return []
+     * @return array
      */
     protected function getFormValues(): array
     {
@@ -116,7 +114,6 @@ class CleverreachFinisher extends AbstractFinisher
             ->getFormDefinition()
             ->getElementByIdentifier($elementIdentifier);
     }
-
 
 
 }

@@ -12,6 +12,11 @@ finishers:
       groupId: ''
       mode: Optin
     identifier: Cleverreach
+  -
+    options:
+      message: 'Vielen Dank. Sie erhalten eine E-Mail mit Bestätigungslink.'
+      contentElementUid: ''
+    identifier: Confirmation
 renderables:
   -
     renderingOptions:

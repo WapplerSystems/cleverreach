@@ -1,33 +1,31 @@
-
-
-
 plugin.tx_powermail {
-    settings.setup {
+  settings.setup {
 
-        validation {
-            native = 1
-            server = 1
-            customValidation {
-                120 = WapplerSystems\Cleverreach\Powermail\Validator\OptinValidator
-                121 = WapplerSystems\Cleverreach\Powermail\Validator\OptoutValidator
-            }
-        }
-
-        finishers {
-            1 {
-                class = WapplerSystems\Cleverreach\Powermail\Finisher\CleverReach
-                config < plugin.tx_cleverreach.settings
-                config {
-
-
-                }
-            }
-        }
-
+    validation {
+      native = 1
+      server = 1
+      customValidation {
+        120 = WapplerSystems\Cleverreach\Powermail\Validator\OptinValidator
+        121 = WapplerSystems\Cleverreach\Powermail\Validator\OptoutValidator
+      }
     }
-    _LOCAL_LANG.default.validationerror_validation.120 = No correct email address or already in list
-    _LOCAL_LANG.de.validationerror_validation.120 = Keine korrekte Email-Adresse oder sie befindet sich schon in der Liste
 
-    _LOCAL_LANG.default.validationerror_validation.121 = This email address is not in our list
-    _LOCAL_LANG.de.validationerror_validation.121 = Diese Email-Adresse befindet sich nicht in unserer Liste
+    finishers {
+      1 {
+        class = WapplerSystems\Cleverreach\Powermail\Finisher\CleverReach
+        config < plugin.tx_cleverreach.settings
+        config {
+
+
+        }
+      }
+    }
+
+  }
+
+  _LOCAL_LANG.default.validationerror_validation.120 = No correct email address or already in list
+  _LOCAL_LANG.de.validationerror_validation.120 = Keine korrekte Email-Adresse oder sie befindet sich schon in der Liste
+
+  _LOCAL_LANG.default.validationerror_validation.121 = This email address is not in our list
+  _LOCAL_LANG.de.validationerror_validation.121 = Diese Email-Adresse befindet sich nicht in unserer Liste
 }

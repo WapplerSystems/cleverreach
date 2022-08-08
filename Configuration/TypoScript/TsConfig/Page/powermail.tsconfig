@@ -1,5 +1,3 @@
-
-
 tx_powermail.flexForm.validation.addFieldOptions.120 = CleverReach Optin Email
 tx_powermail.flexForm.validation.addFieldOptions.121 = CleverReach Optout Email
 
@@ -12,18 +10,22 @@ tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.maxi
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.minitems = 0
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.renderType = selectSingle
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items {
+
 }
+
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.0 {
-    0 = ---
-    1 =
+  0 = ---
+  1 =
 }
+
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.1 {
-    0 = Anmelden
-    1 = optin
+  0 = Anmelden
+  1 = optin
 }
+
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.2 {
-    0 = Abmelden
-    1 = optout
+  0 = Abmelden
+  1 = optout
 }
 
 
