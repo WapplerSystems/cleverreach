@@ -1,15 +1,18 @@
 plugin.tx_cleverreach {
 
-  settings {
-    clientId = {$plugin.tx_cleverreach.clientId}
+	settings {
+		clientId = {$plugin.tx_cleverreach.clientId}
     login = {$plugin.tx_cleverreach.login}
-    password = {$plugin.tx_cleverreach.password}
-    formId = {$plugin.tx_cleverreach.formId}
-    groupId = {$plugin.tx_cleverreach.groupId}
-    restUrl = {$plugin.tx_cleverreach.restUrl}
-    source = {$plugin.tx_cleverreach.source}
-    unsubscribemethod = {$plugin.tx_cleverreach.unsubscribemethod}
-  }
+		password = {$plugin.tx_cleverreach.password}
+		formId = {$plugin.tx_cleverreach.formId}
+		groupId = {$plugin.tx_cleverreach.groupId}
+		restUrl = {$plugin.tx_cleverreach.restUrl}
+		source = {$plugin.tx_cleverreach.source}
+		unsubscribemethod = {$plugin.tx_cleverreach.unsubscribemethod}
+		oauthTokenUrl = {$plugin.tx_cleverreach.oauthTokenUrl}
+		oauthClientId = {$plugin.tx_cleverreach.oauthClientId}
+		oauthClientSecret = {$plugin.tx_cleverreach.oauthClientSecret}
+	}
 
 }
 
