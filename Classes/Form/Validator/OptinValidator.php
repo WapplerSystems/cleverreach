@@ -28,7 +28,7 @@ use WapplerSystems\Cleverreach\Service\ConfigurationService;
 class OptinValidator extends AbstractValidator
 {
 
-    /**
+     /**
      * Checks if the given value is already in the list
      *
      * @param mixed $value The value that should be validated
