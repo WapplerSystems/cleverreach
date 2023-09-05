@@ -1,5 +1,5 @@
 <?php
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['cleverreach'] = [
     'title' => 'CleverReach',
     'description' => 'Finishers and validators for EXT:form and Powermail',
     'category' => 'misc',
@@ -10,11 +10,11 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Sven Wappler',
     'author_email' => 'typo3YYYY@wappler.systems',
     'author_company' => 'WapplerSystems',
-    'version' => '11.0.0',
+    'version' => '12.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.5.0-11.5.99',
-            'php' => '7.4.0-8.1.99',
+            'typo3' => '12.4.0-12.4.99',
+            'php' => '8.2.0-8.2.99',
         ],
         'conflicts' => [],
         'suggests' => [],
