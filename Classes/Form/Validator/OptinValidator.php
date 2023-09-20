@@ -34,7 +34,7 @@ class OptinValidator extends AbstractValidator
      * @param mixed $value The value that should be validated
      * @api
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
 
         /** @var ConfigurationService $configurationService */
