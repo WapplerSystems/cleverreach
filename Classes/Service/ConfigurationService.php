@@ -19,7 +19,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class ConfigurationService
 {
 
-    public function getConfiguration(): string
+    public function getConfiguration(): array
     {
 
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
