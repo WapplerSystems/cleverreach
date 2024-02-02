@@ -28,6 +28,7 @@ class ConfigurationService
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             'cleverreach'
         );
+
         return $settings['plugin.']['tx_cleverreach.']['settings.'];
     }
 
@@ -38,6 +39,7 @@ class ConfigurationService
     {
 
         $config = $this->getConfiguration();
+
         return $config['restUrl'];
     }
 
@@ -48,6 +50,7 @@ class ConfigurationService
     {
 
         $config = $this->getConfiguration();
+
         return $config['clientId'];
 
     }
@@ -58,6 +61,7 @@ class ConfigurationService
     public function getLoginName()
     {
         $config = $this->getConfiguration();
+
         return $config['login'];
     }
 
@@ -67,6 +71,7 @@ class ConfigurationService
     public function getPassword()
     {
         $config = $this->getConfiguration();
+
         return $config['password'];
     }
 
@@ -76,6 +81,7 @@ class ConfigurationService
     public function getGroupId()
     {
         $config = $this->getConfiguration();
+
         return (int)$config['groupId'];
     }
 
@@ -85,6 +91,7 @@ class ConfigurationService
     public function getFormId()
     {
         $config = $this->getConfiguration();
+
         return (int)$config['formId'];
     }
 
@@ -94,6 +101,7 @@ class ConfigurationService
     public function getUnsubscribeMethod()
     {
         $config = $this->getConfiguration();
+
         return $config['unsubscribemethod'];
     }
 
