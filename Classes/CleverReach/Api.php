@@ -61,7 +61,7 @@ class Api
                 [
                     'client_id' => $this->configurationService->getClientId(),
                     'login' => $this->configurationService->getLoginName(),
-                    'password' => $this->configurationService->getPassword()
+                    'password' => $this->configurationService->getPassword(),
                 ]
             );
             $this->rest->setAuthMode('bearer', $token);
@@ -103,7 +103,7 @@ class Api
         }
 
         try {
-            $return = $this->rest->post('/groups.json/' . $groupId . '/receivers/insert',
+            $return = $this->rest->post('/groups.json/'.$groupId.'/receivers/insert',
                 $aReceivers
             );
             if (\is_object($return) && $return->status === 'insert success') {
@@ -133,7 +133,7 @@ class Api
         }
 
         try {
-            $this->rest->delete('/groups.json/' . $groupId . '/receivers/' . $receivers);
+            $this->rest->delete('/groups.json/'.$groupId.'/receivers/'.$receivers);
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -155,7 +155,7 @@ class Api
         }
 
         try {
-            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setinactive');
+            $this->rest->put('/groups.json/'.$groupId.'/receivers/'.$receivers.'/setinactive');
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -177,7 +177,7 @@ class Api
         }
 
         try {
-            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setactive');
+            $this->rest->put('/groups.json/'.$groupId.'/receivers/'.$receivers.'/setactive');
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -197,7 +197,7 @@ class Api
         }
 
         try {
-            return $this->rest->get('/groups.json/' . $groupId);
+            return $this->rest->get('/groups.json/'.$groupId);
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -219,13 +219,15 @@ class Api
         }
 
         try {
-            $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            $this->rest->get('/groups.json/'.$groupId.'/receivers/'.$id);
+
             return true;
         } catch (\Exception $ex) {
             if ($ex->getCode() !== 404) {
                 $this->log($ex);
             }
         }
+
         return false;
     }
 
@@ -244,13 +246,15 @@ class Api
         }
 
         try {
-            $return = $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            $return = $this->rest->get('/groups.json/'.$groupId.'/receivers/'.$id);
+
             return Receiver::createInstance($return);
         } catch (\Exception $ex) {
             if ($ex->getCode() !== 404) {
                 $this->log($ex);
             }
         }
+
         return null;
     }
 
@@ -266,6 +270,7 @@ class Api
         if ($receiver !== null) {
             return $receiver->isActive();
         }
+
         return false;
     }
 
@@ -293,7 +298,7 @@ class Api
         ];
 
         try {
-            $this->rest->post('/forms.json/' . $formId . '/send/activate',
+            $this->rest->post('/forms.json/'.$formId.'/send/activate',
                 [
                     'email' => $email,
                     'groups_id' => $groupId,
@@ -339,7 +344,7 @@ class Api
         ];
 
         try {
-            $this->rest->post('/forms.json/' . $formId . '/send/deactivate',
+            $this->rest->post('/forms.json/'.$formId.'/send/deactivate',
                 [
                     'email' => $email,
                     'groups_id' => $groupId,
@@ -366,7 +371,7 @@ class Api
     {
         $this->connect();
         try {
-            $this->rest->put('/receivers.json/' . $email . '/attributes/' . $attributeId,
+            $this->rest->put('/receivers.json/'.$email.'/attributes/'.$attributeId,
                 [
                     'value' => $value,
                 ]
@@ -382,7 +387,7 @@ class Api
     {
         $this->connect();
         try {
-            $this->rest->delete('/receivers.json/' . $email . '',
+            $this->rest->delete('/receivers.json/'.$email.'',
                 [
                     'group_id' => $groupId,
                 ]
