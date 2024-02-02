@@ -19,8 +19,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class ConfigurationService
 {
 
-
-    public function getConfiguration()
+    public function getConfiguration(): string
     {
 
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
@@ -35,7 +34,7 @@ class ConfigurationService
     /**
      * @return string
      */
-    public function getRestUrl()
+    public function getRestUrl(): string
     {
 
         $config = $this->getConfiguration();
@@ -46,7 +45,7 @@ class ConfigurationService
     /**
      * @return string
      */
-    public function getClientId()
+    public function getClientId(): string
     {
 
         $config = $this->getConfiguration();
@@ -58,7 +57,7 @@ class ConfigurationService
     /**
      * @return string
      */
-    public function getLoginName()
+    public function getLoginName(): string
     {
         $config = $this->getConfiguration();
 
@@ -68,7 +67,7 @@ class ConfigurationService
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         $config = $this->getConfiguration();
 
@@ -78,7 +77,7 @@ class ConfigurationService
     /**
      * @return int
      */
-    public function getGroupId()
+    public function getGroupId(): string
     {
         $config = $this->getConfiguration();
 
@@ -88,7 +87,7 @@ class ConfigurationService
     /**
      * @return int
      */
-    public function getFormId()
+    public function getFormId(): string
     {
         $config = $this->getConfiguration();
 
@@ -98,11 +97,51 @@ class ConfigurationService
     /**
      * @return string
      */
-    public function getUnsubscribeMethod()
+    public function getUnsubscribeMethod(): string
     {
         $config = $this->getConfiguration();
 
         return $config['unsubscribemethod'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthMode(): string
+    {
+        return $this->getConfiguration()['authMode'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOauthTokenUrl(): string
+    {
+        return $this->getConfiguration()['oauthTokenUrl'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOauthClientId(): string
+    {
+        return $this->getConfiguration()['oauthClientId'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOauthClientSecret(): string
+    {
+        return $this->getConfiguration()['oauthClientSecret'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getOauthClientCode(): string
+    {
+        return $this->getConfiguration()['oauthClientCode'];
     }
 
 }

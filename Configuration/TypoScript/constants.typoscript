@@ -15,6 +15,17 @@ plugin.tx_cleverreach {
   # cat=plugin.tx_cleverreach//e; type=string; label=Source name
   source = TYPO3
 
+  # cat=plugin.tx_cleverreach//b; type=string; label=Auth Mode
+  authMode = oauth
+  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Token URL
+  oauthTokenUrl =
+  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client ID
+  oauthClientId =
+  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client Secret
+  oauthClientSecret =
+  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client Code
+  oauthClientCode =
+
   # cat=plugin.tx_cleverreach//f; type=options[Set user inactive=inactive,doubleoptout=inactive with double-opt-out email,delete=delete]; label=How users will be removed
   unsubscribemethod = inactive
 
