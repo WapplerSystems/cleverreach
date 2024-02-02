@@ -454,7 +454,7 @@ class Api
         }
 
         // cache result for expire time minus 2 minutes buffer
-        $cache->set(self::CACHE_KEY, $responseData['access_token'], ($responseData['expires_in']) - 120);
+        $cache->set(self::CACHE_KEY, $responseData['access_token'], [], ($responseData['expires_in']) - 120);
 
         return $responseData['access_token'];
     }
