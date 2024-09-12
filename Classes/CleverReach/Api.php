@@ -237,6 +237,7 @@ class Api
                 $this->log($ex);
             }
         }
+
         return false;
     }
 
@@ -263,6 +264,7 @@ class Api
                 $this->log($ex);
             }
         }
+
         return null;
     }
 
@@ -278,6 +280,7 @@ class Api
         if ($receiver !== null) {
             return $receiver->isActive();
         }
+
         return false;
     }
 

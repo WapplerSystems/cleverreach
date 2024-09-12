@@ -38,6 +38,7 @@ class ConfigurationService
     {
 
         $config = $this->getConfiguration();
+
         return $config['restUrl'];
     }
 
@@ -48,6 +49,7 @@ class ConfigurationService
     {
 
         $config = $this->getConfiguration();
+
         return $config['clientId'];
 
     }
@@ -58,6 +60,7 @@ class ConfigurationService
     public function getLoginName(): string
     {
         $config = $this->getConfiguration();
+
         return $config['login'];
     }
 
@@ -67,6 +70,7 @@ class ConfigurationService
     public function getPassword(): string
     {
         $config = $this->getConfiguration();
+
         return $config['password'];
     }
 
@@ -76,6 +80,7 @@ class ConfigurationService
     public function getGroupId(): string
     {
         $config = $this->getConfiguration();
+
         return (int)$config['groupId'];
     }
 
@@ -85,6 +90,7 @@ class ConfigurationService
     public function getFormId(): string
     {
         $config = $this->getConfiguration();
+
         return (int)$config['formId'];
     }
 
@@ -94,6 +100,7 @@ class ConfigurationService
     public function getUnsubscribeMethod(): string
     {
         $config = $this->getConfiguration();
+
         return $config['unsubscribemethod'];
     }
 
