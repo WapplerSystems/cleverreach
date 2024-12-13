@@ -13,7 +13,6 @@ plugin.tx_cleverreach {
     oauthTokenUrl = {$plugin.tx_cleverreach.oauthTokenUrl}
     oauthClientId = {$plugin.tx_cleverreach.oauthClientId}
     oauthClientSecret = {$plugin.tx_cleverreach.oauthClientSecret}
-    oauthClientCode = {$plugin.tx_cleverreach.oauthClientCode}
   }
 
 }

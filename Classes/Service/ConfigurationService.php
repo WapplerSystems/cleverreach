@@ -129,12 +129,5 @@ class ConfigurationService
         return $this->getConfiguration()['oauthClientSecret'];
     }
 
-    /**
-     * @return string
-     */
-    public function getOauthClientCode(): string
-    {
-        return $this->getConfiguration()['oauthClientCode'];
-    }
 
 }

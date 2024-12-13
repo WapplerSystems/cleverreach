@@ -1,34 +1,40 @@
+
+# customsubcategory=oauth=oAuth
+# customsubcategory=old=Old authorization
+
 plugin.tx_cleverreach {
 
-  # cat=plugin.tx_cleverreach//a; type=int; label=Client id
+  # cat=plugin.tx_cleverreach//a; type=string; label=Auth Mode
+  authMode = oauth
+
+  # cat=plugin.tx_cleverreach/old/a; type=int; label=Client id
   clientId =
-  # cat=plugin.tx_cleverreach//b; type=string; label=Login name
+  # cat=plugin.tx_cleverreach/old/b; type=string; label=Login name
   login =
-  # cat=plugin.tx_cleverreach//c; type=string; label=Password
+  # cat=plugin.tx_cleverreach/old/c; type=string; label=Password
   password =
-  # cat=plugin.tx_cleverreach//c; type=int; label=Form id: Die Formular-ID
+
+  # cat=plugin.tx_cleverreach//e; type=int; label=Form id: Die Formular-ID
   formId =
-  # cat=plugin.tx_cleverreach//c; type=int; label=Group id
+  # cat=plugin.tx_cleverreach//f; type=int; label=Receivers/group ID
   groupId =
-  # cat=plugin.tx_cleverreach//d; type=string; label=REST URL
+  # cat=plugin.tx_cleverreach//g; type=string; label=REST URL
   restUrl = https://rest.cleverreach.com/v2
-  # cat=plugin.tx_cleverreach//e; type=string; label=Source name
+  # cat=plugin.tx_cleverreach//h; type=string; label=Source name
   source = TYPO3
 
-  # cat=plugin.tx_cleverreach//b; type=string; label=Auth Mode
-  authMode = oauth
-  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Token URL
-  oauthTokenUrl =
-  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client ID
+
+
+  # cat=plugin.tx_cleverreach/oauth/b; type=string; label=OAuth Token URL
+  oauthTokenUrl = https://rest.cleverreach.com/oauth/token.php
+  # cat=plugin.tx_cleverreach/oauth/c; type=string; label=OAuth Client ID
   oauthClientId =
-  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client Secret
+  # cat=plugin.tx_cleverreach/oauth/d; type=string; label=OAuth Client Secret
   oauthClientSecret =
-  # cat=plugin.tx_cleverreach//b; type=string; label=OAuth Client Code
-  oauthClientCode =
 
-  # cat=plugin.tx_cleverreach//f; type=options[Set user inactive=inactive,doubleoptout=inactive with double-opt-out email,delete=delete]; label=How users will be removed
-  unsubscribemethod = inactive
+  # cat=plugin.tx_cleverreach//h; type=options[Set user inactive=inactive,doubleoptout=inactive with double-opt-out email,delete=delete]; label=How users will be removed
+  unsubscribemethod = delete
 
-  # cat=plugin.tx_cleverreach//g; type=int; label=Debug mode
+  # cat=plugin.tx_cleverreach//j; type=int; label=Debug mode
   debug = 0
 }
