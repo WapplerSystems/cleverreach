@@ -1,0 +1,5 @@
+name: wapplersystems/cleverreach-form
+label: CleverReach Form Integration
+dependencies:
+  - wapplersystems/cleverreach
+  - typo3/form

@@ -1,0 +1,18 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Module" />
+
+<f:section name="Content">
+    <h1>CleverReach OAuth</h1>
+    <p>Du wirst zu CleverReach weitergeleitet...</p>
+
+    <script>
+        // Ganze Seite (top) statt nur das iframe umleiten
+        if (window.top) {
+            window.top.location.href = '{authorizeUrl -> f:format.raw()}';
+        } else {
+            window.location.href = '{authorizeUrl -> f:format.raw()}';
+        }
+    </script>
+</f:section>
+</html>

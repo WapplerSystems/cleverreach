@@ -43,14 +43,14 @@ class OptinValidator extends AbstractValidator
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $groupId = ($this->options['groupId'] ?? '') ? $this->options['groupId'] : $configuration['groupId'];
+        $listId = ($this->options['listId'] ?? '') ? $this->options['listId'] : $configuration['listId'];
 
-        if (empty($groupId)) {
-            $this->addError('Group ID not set.', 1534719428);
+        if (empty($listId)) {
+            $this->addError('List ID not set.', 1534719428);
             return;
         }
 
-        if ($api->isReceiverOfGroupAndActive($value, $groupId)) {
+        if ($api->isReceiverOfGroupAndActive($value, $listId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.alreadyInList',

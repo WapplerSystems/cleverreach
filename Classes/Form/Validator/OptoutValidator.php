@@ -48,14 +48,14 @@ class OptoutValidator extends AbstractValidator
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
-        $groupId = ($this->options['groupId'] ?? '') !== '' ? $this->options['groupId'] : $configuration['groupId'];
+        $listId = ($this->options['listId'] ?? '') !== '' ? $this->options['listId'] : $configuration['listId'];
 
-        if (empty($groupId)) {
+        if (empty($listId)) {
             $this->addError('Group ID not set.', 1534719428);
             return;
         }
 
-        if (!$this->api->isReceiverOfGroupAndActive($value, $groupId)) {
+        if (!$this->api->isReceiverOfGroupAndActive($value, $listId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.notInList',

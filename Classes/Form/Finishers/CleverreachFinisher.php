@@ -37,7 +37,7 @@ class CleverreachFinisher extends AbstractFinisher
      * @see AbstractFinisher::execute()
      *
      */
-    protected function executeInternal()
+    protected function executeInternal(): void
     {
 
         $formValues = $this->getFormValues();
@@ -48,10 +48,12 @@ class CleverreachFinisher extends AbstractFinisher
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $groupId = ($this->options['groupId'] ?? '') ? $this->options['groupId'] : $configuration['groupId'];
+        $listId = (int)(($this->options['listId'] ?? '') ? $this->options['listId'] : $configuration['listId']);
         $formId = ($this->options['formId'] ?? '') ? $this->options['formId'] : $configuration['formId'];
 
-        if (empty($groupId) || empty($formId)) throw new FinisherException('Form ID or Group ID not set.');
+        if (empty($listId) || empty($formId)) {
+            throw new FinisherException('Form ID or List ID not set.');
+        }
 
         $email = null;
         $attributes = [];
@@ -77,12 +79,12 @@ class CleverreachFinisher extends AbstractFinisher
             if (strtolower($this->options['mode']) === Api::MODE_OPTIN) {
 
                 $receiver = new Receiver($email, $attributes);
-                $api->addReceiversToGroup($receiver, $groupId);
-                $api->sendSubscribeMail($email, $formId, $groupId);
+                $api->addReceiversToList($receiver, $listId);
+                $api->sendSubscribeMail($email, $formId, $listId);
 
             } else if (strtolower($this->options['mode']) === Api::MODE_OPTOUT) {
 
-                $api->sendUnsubscribeMail($email, $formId, $groupId);
+                $api->sendUnsubscribeMail($email, $formId, $listId);
 
             }
 

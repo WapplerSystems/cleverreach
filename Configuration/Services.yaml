@@ -4,6 +4,9 @@ services:
     autoconfigure: true
     public: false
 
+  WapplerSystems\Cleverreach\:
+    resource: '../Classes/*'
+
   WapplerSystems\Cleverreach\Service\ConfigurationService:
     public: true
 

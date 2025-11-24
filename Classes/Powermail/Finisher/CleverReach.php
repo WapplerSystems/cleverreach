@@ -24,26 +24,26 @@ class CleverReach extends AbstractFinisher
     /**
      * @var array
      */
-    protected $dataArray = [];
+    protected array $dataArray = [];
 
 
     /**
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
 
     /**
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
 
     /**
      *
      * @return void
      */
-    public function cleverreachFinisher()
+    public function cleverreachFinisher(): void
     {
 
         if ($this->email === '') return;
@@ -55,7 +55,7 @@ class CleverReach extends AbstractFinisher
 
         $settings = $this->getSettings();
         $formId = isset($settings['main']['cleverreachFormId']) && \strlen($settings['main']['cleverreachFormId']) > 0 ? $settings['main']['cleverreachFormId'] : null;
-        $groupId = isset($settings['main']['cleverreachGroupId']) && \strlen($settings['main']['cleverreachGroupId']) > 0 ? $settings['main']['cleverreachGroupId'] : null;
+        $groupId = isset($settings['main']['cleverreachListId']) && \strlen($settings['main']['cleverreachListId']) > 0 ? $settings['main']['cleverreachListId'] : null;
 
 
         if (array_key_exists('newslettercondition',$formValues)) {
@@ -68,7 +68,7 @@ class CleverReach extends AbstractFinisher
         if ($this->settings['main']['cleverreach'] === Api::MODE_OPTIN) {
 
             $receiver = new Receiver($this->email,$formValues);
-            $api->addReceiversToGroup($receiver,$groupId);
+            $api->addReceiversToList($receiver,(int)$groupId);
             $api->sendSubscribeMail($this->email,$formId,$groupId);
 
         } else if ($this->settings['main']['cleverreach'] === Api::MODE_OPTOUT) {
@@ -79,11 +79,11 @@ class CleverReach extends AbstractFinisher
 
             } else if ($configurationService->getUnsubscribeMethod() === 'delete') {
 
-                $api->removeReceiversFromGroup($this->email);
+                $api->removeReceiversFromList($this->email);
 
             } else {
 
-                $api->disableReceiversInGroup($this->email, $groupId);
+                $api->disableReceiversInList($this->email, $groupId);
 
             }
 

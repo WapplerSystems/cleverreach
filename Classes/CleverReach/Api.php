@@ -10,12 +10,7 @@ namespace WapplerSystems\Cleverreach\CleverReach;
  */
 
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
+use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
@@ -31,70 +26,38 @@ class Api
      */
     protected ConfigurationService $configurationService;
 
+    protected ?Rest $rest;
 
-    /** @var Rest */
-    protected $rest;
+    protected Logger $logger;
 
+    public const string MODE_OPTIN = 'optin';
 
-    /** @var \TYPO3\CMS\Core\Log\Logger */
-    protected $logger;
-
-
-    public const MODE_OPTIN = 'optin';
-
-    public const MODE_OPTOUT = 'optout';
-
-    private const CACHE_KEY = 'ws_cleverreach_token_storage';
+    public const string MODE_OPTOUT = 'optout';
 
     public function __construct(ConfigurationService $configurationService)
     {
         $this->configurationService = $configurationService;
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        $this->rest = new Rest('https://rest.cleverreach.com/v3');
     }
 
 
-    public function connect()
+    public function connect(): void
     {
-
-        if ($this->rest !== null) {
-            return;
-        }
-
-        $this->rest = new Rest($this->configurationService->getRestUrl());
-
-        try {
-            if ($this->configurationService->getAuthMode() === 'oauth') {
-                $token = $this->authenticateViaOAuth();
-            } else {
-                $token = $this->rest->post('/login',
-                    [
-                        'client_id' => $this->configurationService->getClientId(),
-                        'login' => $this->configurationService->getLoginName(),
-                        'password' => $this->configurationService->getPassword(),
-                    ]
-                );
-            }
-            $this->rest->setAuthMode('bearer', $token);
-        } catch (\Exception|GuzzleException $ex) {
-            $this->log($ex);
-        }
-
+        $this->rest->setToken($this->configurationService->getAccessToken());
     }
 
 
     /**
      * Inserts receiver to a list. Ignores, if already in list.
      *
-     * @param mixed $receivers
-     * @param int $groupId
-     * @return mixed
      */
-    public function addReceiversToGroup($receivers, $groupId = null)
+    public function addReceiversToList($receivers, ?int $listId = null): bool
     {
         $this->connect();
 
-        if ($groupId === null || $groupId === '') {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
         $aReceivers = [];
 
@@ -113,7 +76,7 @@ class Api
         }
 
         try {
-            $return = $this->rest->post('/groups.json/' . $groupId . '/receivers/insert',
+            $return = $this->rest->post('/groups.json/' . $listId . '/receivers/insert',
                 $aReceivers
             );
             if (\is_object($return) && $return->status === 'insert success') {
@@ -123,7 +86,6 @@ class Api
             $this->log($ex);
         }
 
-
         return false;
     }
 
@@ -131,19 +93,37 @@ class Api
     /**
      * TODO
      *
-     * @param mixed $receivers
-     * @param int $groupId
      */
-    public function removeReceiversFromGroup($receivers, $groupId = null)
+    public function removeReceiversFromGroup($receivers, ?int $listId = null): void
     {
         $this->connect();
 
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
 
         try {
-            $this->rest->delete('/groups.json/' . $groupId . '/receivers/' . $receivers);
+            $this->rest->delete('/groups.json/' . $listId . '/receivers/' . $receivers);
+        } catch (\Exception $ex) {
+            $this->log($ex);
+        }
+    }
+
+
+    /**
+     * Sets receiver state to inactive
+     *
+     */
+    public function disableReceiversInGroup($receivers, ?int $listId = null): void
+    {
+        $this->connect();
+
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
+        }
+
+        try {
+            $this->rest->put('/groups.json/' . $listId . '/receivers/' . $receivers . '/setinactive');
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -154,18 +134,18 @@ class Api
      * Sets receiver state to inactive
      *
      * @param mixed $receivers
-     * @param int $groupId
+     * @param int $listId
      */
-    public function disableReceiversInGroup($receivers, $groupId = null)
+    public function activateReceiversInGroup($receivers, $listId = null)
     {
         $this->connect();
 
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
 
         try {
-            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setinactive');
+            $this->rest->put('/groups.json/' . $listId . '/receivers/' . $receivers . '/setactive');
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -173,41 +153,19 @@ class Api
 
 
     /**
-     * Sets receiver state to inactive
-     *
-     * @param mixed $receivers
-     * @param int $groupId
-     */
-    public function activateReceiversInGroup($receivers, $groupId = null)
-    {
-        $this->connect();
-
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
-        }
-
-        try {
-            $this->rest->put('/groups.json/' . $groupId . '/receivers/' . $receivers . '/setactive');
-        } catch (\Exception $ex) {
-            $this->log($ex);
-        }
-    }
-
-
-    /**
-     * @param int $groupId
+     * @param int $listId
      * @return mixed|null
      */
-    public function getGroup($groupId = null)
+    public function getList($listId = null)
     {
         $this->connect();
 
-        if ($groupId === null || $groupId === '') {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null || $listId === '') {
+            $listId = $this->configurationService->getListId();
         }
 
         try {
-            return $this->rest->get('/groups.json/' . $groupId);
+            return $this->rest->get('/groups.json/' . $listId);
         } catch (\Exception $ex) {
             $this->log($ex);
         }
@@ -217,19 +175,19 @@ class Api
 
     /**
      * @param mixed $id id or email
-     * @param int $groupId
+     * @param int $listId
      * @return bool
      */
-    public function isReceiverOfGroup($id, $groupId = null): bool
+    public function isReceiverOfGroup($id, $listId = null): bool
     {
         $this->connect();
 
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
 
         try {
-            $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
 
             return true;
         } catch (\Exception $ex) {
@@ -243,19 +201,19 @@ class Api
 
     /**
      * @param mixed $id id or email
-     * @param int $groupId
+     * @param int $listId
      * @return Receiver
      */
-    public function getReceiverOfGroup($id, $groupId = null): ?Receiver
+    public function getReceiverOfGroup($id, $listId = null): ?Receiver
     {
         $this->connect();
 
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
 
         try {
-            $return = $this->rest->get('/groups.json/' . $groupId . '/receivers/' . $id);
+            $return = $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
 
             return Receiver::createInstance($return);
         } catch (\Exception $ex) {
@@ -269,12 +227,12 @@ class Api
 
     /**
      * @param mixed $id id or email
-     * @param int $groupId
+     * @param int $listId
      * @return bool
      */
-    public function isReceiverOfGroupAndActive($id, $groupId = null): bool
+    public function isReceiverOfGroupAndActive($id, $listId = null): bool
     {
-        $receiver = $this->getReceiverOfGroup($id, $groupId);
+        $receiver = $this->getReceiverOfGroup($id, $listId);
         if ($receiver !== null) {
             return $receiver->isActive();
         }
@@ -285,14 +243,14 @@ class Api
     /**
      * @param string $email
      * @param int $formId
-     * @param int $groupId
+     * @param int $listId
      */
-    public function sendSubscribeMail($email, $formId = null, $groupId = null): void
+    public function sendSubscribeMail($email, $formId = null, $listId = null): void
     {
         $this->connect();
 
-        if ($groupId === null || $groupId === '') {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null || $listId === '') {
+            $listId = $this->configurationService->getListId();
         }
         if ($formId === null || $formId === '') {
             $formId = $this->configurationService->getFormId();
@@ -309,7 +267,7 @@ class Api
             $this->rest->post('/forms.json/' . $formId . '/send/activate',
                 [
                     'email' => $email,
-                    'groups_id' => $groupId,
+                    'groups_id' => $listId,
                     'doidata' => $doidata,
                 ]
             );
@@ -330,16 +288,16 @@ class Api
 
     /**
      * @param string $email
-     * @param int $formId
-     * @param int $groupId
+     * @param int|null $formId
+     * @param int $listId
      */
-    public function sendUnsubscribeMail($email, $formId = null, $groupId = null): void
+    public function sendUnsubscribeMail(string $email, ?int $formId = null, $listId = null): void
     {
         $this->connect();
 
 
-        if ($groupId === null) {
-            $groupId = $this->configurationService->getGroupId();
+        if ($listId === null) {
+            $listId = $this->configurationService->getListId();
         }
         if ($formId === null) {
             $formId = $this->configurationService->getFormId();
@@ -355,7 +313,7 @@ class Api
             $this->rest->post('/forms.json/' . $formId . '/send/deactivate',
                 [
                     'email' => $email,
-                    'groups_id' => $groupId,
+                    'groups_id' => $listId,
                     'doidata' => $doidata,
                 ]
             );
@@ -391,13 +349,13 @@ class Api
     }
 
 
-    public function deleteReceiver($email, $groupId = null): void
+    public function deleteReceiver($email, $listId = null): void
     {
         $this->connect();
         try {
-            $this->rest->delete('/receivers.json/' . $email . '',
+            $this->rest->delete('/receivers.json/' . $email,
                 [
-                    'group_id' => $groupId,
+                    'group_id' => $listId,
                 ]
             );
         } catch (\Exception $ex) {
@@ -406,54 +364,5 @@ class Api
 
     }
 
-    /**
-     * @throws NoSuchCacheException
-     * @throws GuzzleException
-     * @throws \Exception
-     */
-    protected function authenticateViaOAuth(): string
-    {
-        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
-        $cache = $cacheManager->getCache('hash');
-
-        if ($cachedAccessToken = $cache->get(self::CACHE_KEY)) {
-            return $cachedAccessToken;
-        }
-        $uri = new Uri($this->configurationService->getOauthTokenUrl());
-
-        $arguments = [
-            'grant_type' => 'client_credentials',
-            'client_id' => $this->configurationService->getOauthClientId(),
-            'client_secret' => $this->configurationService->getOAuthClientSecret(),
-        ];
-
-        $request = new Request(
-            'POST',
-            $uri,
-            [
-                'Content-Type' => 'application/json; charset=utf-8',
-            ],
-            \GuzzleHttp\json_encode($arguments)
-        );
-
-        $client = new Client();
-        $rawResponse = $client->send($request, ['http_errors' => false]);
-        $responseData = json_decode($rawResponse->getBody()->getContents(), true);
-
-        if (200 !== $rawResponse->getStatusCode()) {
-            $errorMessage = $responseData['error']['message'] ?? 'Error message not specified';
-
-            throw new \Exception(sprintf('CleverReach Api Error: %s', $errorMessage), 1706886072);
-        }
-
-        if (empty($responseData['access_token'])) {
-            throw new \Exception('CleverReach oAuth failed: %s', 1706886133);
-        }
-
-        // cache result for expire time minus 2 minutes buffer
-        $cache->set(self::CACHE_KEY, $responseData['access_token'], [], ($responseData['expires_in']) - 120);
-
-        return $responseData['access_token'];
-    }
 
 }

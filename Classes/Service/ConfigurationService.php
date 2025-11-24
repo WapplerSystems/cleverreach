@@ -2,6 +2,7 @@
 
 namespace WapplerSystems\Cleverreach\Service;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -19,6 +20,13 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class ConfigurationService
 {
 
+    public function __construct(
+        private readonly ExtensionConfiguration $extensionConfiguration,
+    )
+    {
+
+    }
+
     public function getConfiguration(): array
     {
 
@@ -32,57 +40,18 @@ class ConfigurationService
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getRestUrl(): string
-    {
-
-        $config = $this->getConfiguration();
-        return $config['restUrl'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getClientId(): string
-    {
-
-        $config = $this->getConfiguration();
-        return $config['clientId'];
-
-    }
-
-    /**
-     * @return string
-     */
-    public function getLoginName(): string
+    public function getListId(): int
     {
         $config = $this->getConfiguration();
-        return $config['login'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        $config = $this->getConfiguration();
-        return $config['password'];
+        return (int)$config['listId'];
     }
 
     /**
      * @return int
      */
-    public function getGroupId(): string
-    {
-        $config = $this->getConfiguration();
-        return (int)$config['groupId'];
-    }
-
-    /**
-     * @return int
-     */
-    public function getFormId(): string
+    public function getFormId(): int
     {
         $config = $this->getConfiguration();
         return (int)$config['formId'];
@@ -97,36 +66,29 @@ class ConfigurationService
         return $config['unsubscribemethod'];
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthMode(): string
+
+    public function getClientId()
     {
-        return $this->getConfiguration()['authMode'];
+        $settings = $this->extensionConfiguration->get('cleverreach') ?? [];
+        return $settings['clientId'] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getOauthTokenUrl(): string
+    public function getAccessToken()
     {
-        return $this->getConfiguration()['oauthTokenUrl'];
+        $settings = $this->extensionConfiguration->get('cleverreach') ?? [];
+        return $settings['accessToken'] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getOauthClientId(): string
+    public function getRefreshToken()
     {
-        return $this->getConfiguration()['oauthClientId'];
+        $settings = $this->extensionConfiguration->get('cleverreach') ?? [];
+        return $settings['refreshToken'] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getOauthClientSecret(): string
+    public function getTokenExpiresAt()
     {
-        return $this->getConfiguration()['oauthClientSecret'];
+        $settings = $this->extensionConfiguration->get('cleverreach') ?? [];
+        return $settings['tokenExpiresAt'] ?? '';
     }
 
 

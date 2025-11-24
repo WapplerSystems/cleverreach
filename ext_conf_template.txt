@@ -1,0 +1,14 @@
+# cat=oauth/10; type=string; label=Client ID (CleverReach)
+clientId =
+
+# cat=oauth/20; type=string; label=Client Secret (CleverReach)
+clientSecret =
+
+# cat=oauth/30; type=string; label=Access Token (wird automatisch gesetzt)
+accessToken =
+
+# cat=oauth/40; type=string; label=Refresh Token (wird automatisch gesetzt)
+refreshToken =
+
+# cat=oauth/50; type=int; label=Token-Ablaufzeit (Unix Timestamp, wird automatisch gesetzt)
+tokenExpiresAt =

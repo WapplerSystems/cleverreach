@@ -1,0 +1,5 @@
+name: wapplersystems/cleverreach-powermail
+label: CleverReach Powermail Integration
+dependencies:
+  - wapplersystems/cleverreach
+  - in2code/powermail-main
