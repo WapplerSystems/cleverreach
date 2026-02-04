@@ -14,18 +14,18 @@ tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.item
 }
 
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.0 {
-  0 = ---
-  1 =
+  label = ---
+  value =
 }
 
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.1 {
-  0 = Anmelden
-  1 = optin
+  label = Anmelden
+  value = optin
 }
 
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreach.config.items.2 {
-  0 = Abmelden
-  1 = optout
+  label = Abmelden
+  value = optout
 }
 
 
