@@ -55,7 +55,7 @@ class CleverReach extends AbstractFinisher
 
         $settings = $this->getSettings();
         $formId = isset($settings['main']['cleverreachFormId']) && \strlen($settings['main']['cleverreachFormId']) > 0 ? $settings['main']['cleverreachFormId'] : null;
-        $groupId = isset($settings['main']['cleverreachListId']) && \strlen($settings['main']['cleverreachListId']) > 0 ? $settings['main']['cleverreachListId'] : null;
+        $groupId = isset($settings['main']['cleverreachGroupId']) && \strlen($settings['main']['cleverreachGroupId']) > 0 ? $settings['main']['cleverreachGroupId'] : null;
 
 
         if (array_key_exists('newslettercondition',$formValues)) {
