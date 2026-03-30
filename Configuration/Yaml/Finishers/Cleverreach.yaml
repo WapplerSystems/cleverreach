@@ -10,6 +10,9 @@ prototypes:
             options:
               formId: ''
               groupId: ''
+              emailField: ''
+              firstNameField: ''
+              lastNameField: ''
 
         FormEngine:
           label: 'CleverReach'
@@ -72,6 +75,27 @@ prototypes:
                     templateName: 'Inspector-TextEditor'
                     propertyPath: 'options.oauthClient'
                     label: 'OAuth Client'
+                  600:
+                    identifier: 'emailField'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.emailField'
+                    label: 'Email Field'
+                    enableFormelementSelectionButton: true
+                    propertyValidatorsMode: AND
+                    propertyValidators:
+                      10: NotEmpty
+                  700:
+                    identifier: 'firstNameField'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.firstNameField'
+                    label: 'First Name Field'
+                    enableFormelementSelectionButton: true
+                  800:
+                    identifier: 'lastNameField'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.lastNameField'
+                    label: 'Last Name Field'
+                    enableFormelementSelectionButton: true
                   9999:
                     identifier: 'removeButton'
                     templateName: 'Inspector-RemoveElementEditor'

@@ -1,6 +1,6 @@
 imports:
   - { resource: './Finishers/Cleverreach.yaml' }
-  - { resource: './FormElements/Overrides/Text.yaml' }
+  - { resource: './FormElements/Overrides/Email.yaml' }
   - { resource: './Validators/CleverReachOptIn.yaml' }
   - { resource: './Validators/CleverReachOptOut.yaml' }
 

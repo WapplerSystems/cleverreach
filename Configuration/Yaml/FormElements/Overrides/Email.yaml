@@ -1,7 +1,7 @@
 prototypes:
   standard:
     formElementsDefinition:
-      Text:
+      Email:
         formEditor:
           editors:
             900:

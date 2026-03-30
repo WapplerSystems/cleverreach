@@ -89,6 +89,7 @@ class Api
             $return = $this->rest->post('/groups.json/' . $listId . '/receivers/insert',
                 $aReceivers
             );
+
             if (\is_object($return) && $return->status === 'insert success') {
                 return true;
             }

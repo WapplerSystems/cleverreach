@@ -28,6 +28,10 @@ use WapplerSystems\Cleverreach\Service\ConfigurationService;
 class OptinValidator extends AbstractValidator
 {
 
+    protected $supportedOptions = [
+        'groupId' => [0, 'The list ID to check against', 'int'],
+    ];
+
     /**
      * Checks if the given value is already in the list
      *
@@ -43,14 +47,14 @@ class OptinValidator extends AbstractValidator
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $listId = ($this->options['listId'] ?? '') ? $this->options['listId'] : $configuration['listId'];
+        $groupId = ($this->options['groupId'] ?? '') ? $this->options['groupId'] : $configuration['groupId'];
 
-        if (empty($listId)) {
+        if (empty($groupId)) {
             $this->addError('List ID not set.', 1534719428);
             return;
         }
 
-        if ($api->isReceiverOfGroupAndActive($value, $listId)) {
+        if ($api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.alreadyInList',
