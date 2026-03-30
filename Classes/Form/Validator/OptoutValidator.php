@@ -16,7 +16,6 @@ namespace WapplerSystems\Cleverreach\Form\Validator;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use WapplerSystems\Cleverreach\Service\ConfigurationService;
 
@@ -28,6 +27,9 @@ use WapplerSystems\Cleverreach\Service\ConfigurationService;
 class OptoutValidator extends AbstractValidator
 {
 
+    protected $supportedOptions = [
+        'groupId' => [0, 'The list ID to check against', 'int'],
+    ];
 
     /**
      * @var \WapplerSystems\Cleverreach\CleverReach\Api
@@ -48,14 +50,14 @@ class OptoutValidator extends AbstractValidator
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $configuration = $configurationService->getConfiguration();
 
-        $listId = ($this->options['listId'] ?? '') !== '' ? $this->options['listId'] : $configuration['listId'];
+        $groupId = ($this->options['groupId'] ?? '') !== '' ? $this->options['groupId'] : $configuration['groupId'];
 
-        if (empty($listId)) {
+        if (empty($groupId)) {
             $this->addError('Group ID not set.', 1534719428);
             return;
         }
 
-        if (!$this->api->isReceiverOfGroupAndActive($value, $listId)) {
+        if (!$this->api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
                 $this->translateErrorMessage(
                     'validator.notInList',
