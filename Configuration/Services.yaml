@@ -12,3 +12,6 @@ services:
 
   WapplerSystems\Cleverreach\CleverReach\Api:
     public: true
+
+  WapplerSystems\Cleverreach\Controller\Backend\FormEditorAjaxController:
+    public: true

@@ -30,6 +30,8 @@ class Api
 
     protected Logger $logger;
 
+    private bool $hasExplicitToken = false;
+
     public const string MODE_OPTIN = 'optin';
 
     public const string MODE_OPTOUT = 'optout';
@@ -41,9 +43,17 @@ class Api
         $this->rest = new Rest('https://rest.cleverreach.com/v3');
     }
 
+    public function connectWithToken(string $accessToken): void
+    {
+        $this->hasExplicitToken = true;
+        $this->rest->setToken($accessToken);
+    }
 
     public function connect(): void
     {
+        if ($this->hasExplicitToken) {
+            return;
+        }
         $this->rest->setToken($this->configurationService->getAccessToken());
     }
 

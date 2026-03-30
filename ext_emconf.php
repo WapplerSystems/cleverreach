@@ -14,6 +14,7 @@ $EM_CONF['cleverreach'] = [
     'constraints' => [
         'depends' => [
             'typo3' => '13.4.0-13.4.99',
+            'oauth_service' => '13.0.0',
         ],
     ],
 ];

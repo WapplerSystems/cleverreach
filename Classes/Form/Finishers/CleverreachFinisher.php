@@ -19,6 +19,8 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\FormElementInterface;
 use WapplerSystems\Cleverreach\CleverReach\Api;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 use WapplerSystems\Cleverreach\Service\ConfigurationService;
+use WapplerSystems\OauthService\Crypto\CryptoService;
+use WapplerSystems\OauthService\Domain\Repository\ConnectionRepository;
 
 
 class CleverreachFinisher extends AbstractFinisher
@@ -27,9 +29,12 @@ class CleverreachFinisher extends AbstractFinisher
     /**
      * @var array
      */
-    protected $defaultOptions = [
-    ];
+    protected $defaultOptions = [];
 
+    public function __construct(
+        private readonly ConnectionRepository $connectionRepository,
+        private readonly CryptoService $cryptoService,
+    ) {}
 
     /**
      * Executes this finisher
@@ -47,6 +52,20 @@ class CleverreachFinisher extends AbstractFinisher
         $configuration = $configurationService->getConfiguration();
 
         $api = GeneralUtility::makeInstance(Api::class);
+
+        $connectionUid = (int)($this->options['oauthConnection'] ?? 0);
+        if ($connectionUid > 0) {
+            /** @var \WapplerSystems\OauthService\Domain\Model\Connection|null $connection */
+            $connection = $this->connectionRepository->findByUid($connectionUid);
+            if ($connection === null || $connection->getStatus() !== 'connected') {
+                throw new FinisherException('OAuth connection #' . $connectionUid . ' not found or not connected.');
+            }
+            $accessToken = $this->cryptoService->decrypt($connection->getAccessToken());
+            if ($accessToken === null || $accessToken === '') {
+                throw new FinisherException('OAuth connection #' . $connectionUid . ' has no valid access token.');
+            }
+            $api->connectWithToken($accessToken);
+        }
 
         $listId = (int)(($this->options['listId'] ?? '') ? $this->options['listId'] : $configuration['listId']);
         $formId = ($this->options['formId'] ?? '') ? $this->options['formId'] : $configuration['formId'];

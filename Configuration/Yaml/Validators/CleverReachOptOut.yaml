@@ -1,0 +1,5 @@
+prototypes:
+  standard:
+    validatorsDefinition:
+      CleverReachOptOut:
+        implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'

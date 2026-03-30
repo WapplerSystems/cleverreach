@@ -14,12 +14,33 @@ use In2code\Powermail\Domain\Model\Mail;
 use In2code\Powermail\Finisher\AbstractFinisher;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use WapplerSystems\Cleverreach\CleverReach\Api;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
 use WapplerSystems\Cleverreach\Service\ConfigurationService;
+use WapplerSystems\OauthService\Crypto\CryptoService;
+use WapplerSystems\OauthService\Domain\Repository\ConnectionRepository;
 
 class CleverReach extends AbstractFinisher
 {
+
+    private ConnectionRepository $connectionRepository;
+    private CryptoService $cryptoService;
+
+    public function __construct(
+        Mail $mail,
+        array $configuration,
+        array $settings,
+        bool $formSubmitted,
+        string $actionMethodName,
+        ContentObjectRenderer $contentObject,
+        ?ConnectionRepository $connectionRepository = null,
+        ?CryptoService $cryptoService = null,
+    ) {
+        parent::__construct($mail, $configuration, $settings, $formSubmitted, $actionMethodName, $contentObject);
+        $this->connectionRepository = $connectionRepository ?? GeneralUtility::makeInstance(ConnectionRepository::class);
+        $this->cryptoService = $cryptoService ?? GeneralUtility::makeInstance(CryptoService::class);
+    }
 
     /**
      * @var array
@@ -54,6 +75,18 @@ class CleverReach extends AbstractFinisher
         $formValues = $this->getFormValues($this->getMail());
 
         $settings = $this->getSettings();
+
+        $connectionUid = (int)($settings['main']['cleverreachConnectionUid'] ?? 0);
+        if ($connectionUid > 0) {
+            /** @var \WapplerSystems\OauthService\Domain\Model\Connection|null $connection */
+            $connection = $this->connectionRepository->findByUid($connectionUid);
+            if ($connection !== null && $connection->getStatus() === 'connected') {
+                $accessToken = $this->cryptoService->decrypt($connection->getAccessToken());
+                if ($accessToken !== null && $accessToken !== '') {
+                    $api->connectWithToken($accessToken);
+                }
+            }
+        }
         $formId = isset($settings['main']['cleverreachFormId']) && \strlen($settings['main']['cleverreachFormId']) > 0 ? $settings['main']['cleverreachFormId'] : null;
         $groupId = isset($settings['main']['cleverreachListId']) && \strlen($settings['main']['cleverreachListId']) > 0 ? $settings['main']['cleverreachListId'] : null;
 

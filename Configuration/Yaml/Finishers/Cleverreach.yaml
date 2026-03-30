@@ -1,0 +1,81 @@
+prototypes:
+  standard:
+    finishersDefinition:
+      Cleverreach:
+        implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher'
+        formEditor:
+          iconIdentifier: form-finisher-cleverreach
+          label: 'CleverReach'
+          predefinedDefaults:
+            options:
+              formId: ''
+              groupId: ''
+
+        FormEngine:
+          label: 'CleverReach'
+          elements:
+            formId:
+              label: 'Form ID'
+              config:
+                type: 'input'
+            groupId:
+              label: 'Group ID'
+              config:
+                type: 'input'
+
+    formElementsDefinition:
+      Form:
+        formEditor:
+          editors:
+            900:
+              selectOptions:
+                90:
+                  value: 'Cleverreach'
+                  label: 'CleverReach'
+
+          propertyCollections:
+            finishers:
+              980:
+                identifier: 'Cleverreach'
+                editors:
+                  100:
+                    identifier: 'header'
+                    templateName: 'Inspector-CollectionElementHeaderEditor'
+                    label: 'CleverReach'
+                  200:
+                    identifier: 'formId'
+                    templateName: 'Inspector-TextEditor'
+                    label: 'Form Id'
+                    propertyPath: 'options.formId'
+                  300:
+                    identifier: 'groupId'
+                    templateName: 'Inspector-TextEditor'
+                    label: 'Group Id'
+                    propertyPath: 'options.groupId'
+                  400:
+                    identifier: 'cleverreachFinisher'
+                    templateName: 'Inspector-SingleSelectEditor'
+                    propertyPath: 'options.mode'
+                    label: 'Mode'
+                    selectOptions:
+                      10:
+                        value: ''
+                        label: '---'
+                      20:
+                        value: 'Optin'
+                        label: 'Opt in'
+                      30:
+                        value: 'Optout'
+                        label: 'Opt out'
+                  500:
+                    identifier: 'oauthConnection'
+                    templateName: 'Inspector-SingleSelectEditor'
+                    propertyPath: 'options.oauthConnection'
+                    label: 'OAuth Verbindung'
+                    selectOptions:
+                      10:
+                        value: ''
+                        label: '---'
+                  9999:
+                    identifier: 'removeButton'
+                    templateName: 'Inspector-RemoveElementEditor'
