@@ -69,13 +69,9 @@ prototypes:
                         label: 'Opt out'
                   500:
                     identifier: 'oauthClient'
-                    templateName: 'Inspector-SingleSelectEditor'
+                    templateName: 'Inspector-TextEditor'
                     propertyPath: 'options.oauthClient'
                     label: 'OAuth Client'
-                    selectOptions:
-                      10:
-                        value: ''
-                        label: '---'
                   9999:
                     identifier: 'removeButton'
                     templateName: 'Inspector-RemoveElementEditor'

@@ -1,8 +1,12 @@
 /**
  * Module: @wapplersystems/cleverreach/Backend/FormEditor/ConnectionSelectViewModel.js
  *
- * Populates the oauthConnection select field in the CleverReach finisher
- * with active oauth-service connections fetched from the backend.
+ * Replaces the Inspector-TextEditor input for the oauthClient finisher property
+ * with a <select> populated from active CleverReach OAuth clients via AJAX.
+ *
+ * Using Inspector-TextEditor (instead of Inspector-SingleSelectEditor) avoids
+ * TYPO3's HMAC "limitedAllowedValues" validation, which would reject dynamically
+ * loaded values that are not listed in the static YAML selectOptions.
  */
 
 import $ from 'jquery';
@@ -17,39 +21,49 @@ function getPublisherSubscriber() {
 }
 
 /**
- * Fetches active CleverReach connections and replaces the <select> options.
+ * Fetches active CleverReach OAuth clients and replaces the text input
+ * rendered by Inspector-TextEditor with a <select> widget.
  *
- * IMPORTANT: The Inspector-SingleSelectEditor stores the real value via
- * jQuery .data({value: ...}) on each <option> – the option's value attribute
- * is just a numeric index. The change handler already attached by
- * inspector-component.js reads .data('value'), so we must follow the same pattern.
+ * Inspector-TextEditor binds changes via a "keyup paste" listener on the
+ * input element ([data-template-property="propertyPath"]). We hide that
+ * input, inject a <select> before it, and mirror the selected value back
+ * into the hidden input, triggering "keyup" so the form model is updated.
  *
  * @param {jQuery} editorHtml   jQuery object of the rendered editor DOM node
- * @param {string} currentValue The currently stored property value (connection UID)
+ * @param {string} currentValue The currently stored property value (client UID)
  */
-async function populateConnectionSelect(editorHtml, currentValue) {
-    const $select = editorHtml.find('[data-template-property="selectOptions"]');
-    if (!$select.length) {
+async function populateClientSelect(editorHtml, currentValue) {
+    const $input = editorHtml.find('[data-template-property="propertyPath"]');
+    if (!$input.length) {
         return;
     }
 
-    let connections;
+    let clients;
     try {
         const response = await new AjaxRequest(TYPO3.settings.ajaxUrls['cleverreach_form_editor_clients']).get();
-        connections = await response.resolve();
+        clients = await response.resolve();
     } catch (e) {
-        console.error('CleverReach: Could not load OAuth connections', e);
+        console.error('CleverReach: Could not load OAuth clients', e);
         return;
     }
 
-    $select.empty();
+    const $select = $('<select class="form-select form-control"></select>');
 
-    connections.forEach(function (conn, index) {
-        const isSelected = conn.value === currentValue;
-        const option = new Option(conn.label, index.toString(), false, isSelected);
-        $(option).data({ value: conn.value });
-        $select.append(option);
+    clients.forEach(function (client) {
+        const isSelected = client.value === currentValue;
+        const $option = $('<option></option>')
+            .val(client.value)
+            .text(client.label)
+            .prop('selected', isSelected);
+        $select.append($option);
     });
+
+    $select.on('change', function () {
+        const newValue = $(this).val();
+        $input.val(newValue).trigger('keyup');
+    });
+
+    $input.hide().before($select);
 }
 
 function _subscribeEvents() {
@@ -75,7 +89,7 @@ function _subscribeEvents() {
             );
             const currentValue = String(_formEditorApp.getCurrentlySelectedFormElement().get(propertyPath) ?? '');
 
-            populateConnectionSelect(editorHtml, currentValue);
+            populateClientSelect(editorHtml, currentValue);
         }
     );
 }
