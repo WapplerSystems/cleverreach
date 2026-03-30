@@ -8,7 +8,7 @@
 import $ from 'jquery';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 
-const EDITOR_IDENTIFIER = 'oauthConnection';
+const EDITOR_IDENTIFIER = 'oauthClient';
 
 let _formEditorApp = null;
 
@@ -35,7 +35,7 @@ async function populateConnectionSelect(editorHtml, currentValue) {
 
     let connections;
     try {
-        const response = await new AjaxRequest(TYPO3.settings.ajaxUrls['cleverreach_form_editor_connections']).get();
+        const response = await new AjaxRequest(TYPO3.settings.ajaxUrls['cleverreach_form_editor_clients']).get();
         connections = await response.resolve();
     } catch (e) {
         console.error('CleverReach: Could not load OAuth connections', e);

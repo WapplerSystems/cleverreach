@@ -68,10 +68,10 @@ prototypes:
                         value: 'Optout'
                         label: 'Opt out'
                   500:
-                    identifier: 'oauthConnection'
+                    identifier: 'oauthClient'
                     templateName: 'Inspector-SingleSelectEditor'
-                    propertyPath: 'options.oauthConnection'
-                    label: 'OAuth Verbindung'
+                    propertyPath: 'options.oauthClient'
+                    label: 'OAuth Client'
                     selectOptions:
                       10:
                         value: ''

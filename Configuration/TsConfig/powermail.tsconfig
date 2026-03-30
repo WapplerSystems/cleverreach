@@ -41,9 +41,9 @@ tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachGroupId._she
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachGroupId.label = CleverReach Group ID
 tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachGroupId.config.type = input
 
-tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachConnectionUid._sheet = main
-tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachConnectionUid.label = CleverReach OAuth Verbindung (UID aus OAuth-Services)
-tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachConnectionUid.config.type = input
+tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachClientUid._sheet = main
+tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachClientUid.label = CleverReach OAuth Client (UID aus OAuth-Services)
+tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachClientUid.config.type = input
 
 #tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachPassword._sheet = main
 #tx_powermail.flexForm.addField.settings\.flexform\.main\.cleverreachPassword.label = CleverReach Password

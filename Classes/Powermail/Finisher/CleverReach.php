@@ -76,12 +76,11 @@ class CleverReach extends AbstractFinisher
 
         $settings = $this->getSettings();
 
-        $connectionUid = (int)($settings['main']['cleverreachConnectionUid'] ?? 0);
-        if ($connectionUid > 0) {
-            /** @var \WapplerSystems\OauthService\Domain\Model\Connection|null $connection */
-            $connection = $this->connectionRepository->findByUid($connectionUid);
-            if ($connection !== null && $connection->getStatus() === 'connected') {
-                $accessToken = $this->cryptoService->decrypt($connection->getAccessToken());
+        $clientUid = (int)($settings['main']['cleverreachClientUid'] ?? 0);
+        if ($clientUid > 0) {
+            $connection = $this->connectionRepository->findActiveConnectionByClientUid($clientUid);
+            if ($connection !== null) {
+                $accessToken = $this->cryptoService->decrypt($connection['access_token']);
                 if ($accessToken !== null && $accessToken !== '') {
                     $api->connectWithToken($accessToken);
                 }

@@ -53,16 +53,15 @@ class CleverreachFinisher extends AbstractFinisher
 
         $api = GeneralUtility::makeInstance(Api::class);
 
-        $connectionUid = (int)($this->options['oauthConnection'] ?? 0);
-        if ($connectionUid > 0) {
-            /** @var \WapplerSystems\OauthService\Domain\Model\Connection|null $connection */
-            $connection = $this->connectionRepository->findByUid($connectionUid);
-            if ($connection === null || $connection->getStatus() !== 'connected') {
-                throw new FinisherException('OAuth connection #' . $connectionUid . ' not found or not connected.');
+        $clientUid = (int)($this->options['oauthClient'] ?? 0);
+        if ($clientUid > 0) {
+            $connection = $this->connectionRepository->findActiveConnectionByClientUid($clientUid);
+            if ($connection === null) {
+                throw new FinisherException('No active OAuth connection found for client #' . $clientUid . '.');
             }
-            $accessToken = $this->cryptoService->decrypt($connection->getAccessToken());
+            $accessToken = $this->cryptoService->decrypt($connection['access_token']);
             if ($accessToken === null || $accessToken === '') {
-                throw new FinisherException('OAuth connection #' . $connectionUid . ' has no valid access token.');
+                throw new FinisherException('Active OAuth connection for client #' . $clientUid . ' has no valid access token.');
             }
             $api->connectWithToken($accessToken);
         }
