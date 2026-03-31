@@ -13,37 +13,26 @@ prototypes:
                   value: 'CleverReachOptOut'
                   label: 'CleverReach Opt Out'
 
-            1900:
-              identifier: 'cleverreachField'
-              templateName: 'Inspector-TextEditor'
-              label: 'CleverReach field'
-              propertyPath: 'properties.cleverreachField'
-
           propertyCollections:
             validators:
               190:
                 identifier: 'CleverReachOptIn'
                 editors:
                   100:
-                    identifier: 'header'
-                    templateName: 'Inspector-CollectionElementHeaderEditor'
+                    identifier: header
+                    templateName: Inspector-CollectionElementHeaderEditor
                     label: 'CleverReach Opt In'
-                  200:
-                    identifier: 'groupId'
-                    templateName: 'Inspector-TextEditor'
-                    label: 'Group ID'
-                    propertyPath: 'options.groupId'
                   9999:
-                    identifier: 'removeButton'
-                    templateName: 'Inspector-RemoveElementEditor'
+                    identifier: removeButton
+                    templateName: Inspector-RemoveElementEditor
 
               191:
                 identifier: 'CleverReachOptOut'
                 editors:
                   100:
-                    identifier: 'header'
-                    templateName: 'Inspector-CollectionElementHeaderEditor'
+                    identifier: header
+                    templateName: Inspector-CollectionElementHeaderEditor
                     label: 'CleverReach Opt Out'
                   9999:
-                    identifier: 'removeButton'
-                    templateName: 'Inspector-RemoveElementEditor'
+                    identifier: removeButton
+                    templateName: Inspector-RemoveElementEditor

@@ -1,0 +1,11 @@
+prototypes:
+  standard:
+    formElementsDefinition:
+      Text:
+        formEditor:
+          editors:
+            1900:
+              identifier: 'cleverreachField'
+              templateName: 'Inspector-TextEditor'
+              label: 'CleverReach field'
+              propertyPath: 'properties.cleverreachField'

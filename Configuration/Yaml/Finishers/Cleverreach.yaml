@@ -8,23 +8,11 @@ prototypes:
           label: 'CleverReach'
           predefinedDefaults:
             options:
-              formId: ''
+              oauthClient: ''
+              mode: ''
               groupId: ''
+              formId: ''
               emailField: ''
-              firstNameField: ''
-              lastNameField: ''
-
-        FormEngine:
-          label: 'CleverReach'
-          elements:
-            formId:
-              label: 'Form ID'
-              config:
-                type: 'input'
-            groupId:
-              label: 'Group ID'
-              config:
-                type: 'input'
 
     formElementsDefinition:
       Form:
@@ -46,16 +34,11 @@ prototypes:
                     templateName: 'Inspector-CollectionElementHeaderEditor'
                     label: 'CleverReach'
                   200:
-                    identifier: 'formId'
+                    identifier: 'oauthClient'
                     templateName: 'Inspector-TextEditor'
-                    label: 'Form Id'
-                    propertyPath: 'options.formId'
+                    propertyPath: 'options.oauthClient'
+                    label: 'OAuth Client'
                   300:
-                    identifier: 'groupId'
-                    templateName: 'Inspector-TextEditor'
-                    label: 'Group Id'
-                    propertyPath: 'options.groupId'
-                  400:
                     identifier: 'cleverreachFinisher'
                     templateName: 'Inspector-SingleSelectEditor'
                     propertyPath: 'options.mode'
@@ -70,11 +53,16 @@ prototypes:
                       30:
                         value: 'Optout'
                         label: 'Opt out'
-                  500:
-                    identifier: 'oauthClient'
+                  400:
+                    identifier: 'groupId'
                     templateName: 'Inspector-TextEditor'
-                    propertyPath: 'options.oauthClient'
-                    label: 'OAuth Client'
+                    propertyPath: 'options.groupId'
+                    label: 'Group ID'
+                  500:
+                    identifier: 'formId'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.formId'
+                    label: 'Form ID'
                   600:
                     identifier: 'emailField'
                     templateName: 'Inspector-TextEditor'
@@ -84,18 +72,6 @@ prototypes:
                     propertyValidatorsMode: AND
                     propertyValidators:
                       10: NotEmpty
-                  700:
-                    identifier: 'firstNameField'
-                    templateName: 'Inspector-TextEditor'
-                    propertyPath: 'options.firstNameField'
-                    label: 'First Name Field'
-                    enableFormelementSelectionButton: true
-                  800:
-                    identifier: 'lastNameField'
-                    templateName: 'Inspector-TextEditor'
-                    propertyPath: 'options.lastNameField'
-                    label: 'Last Name Field'
-                    enableFormelementSelectionButton: true
                   9999:
                     identifier: 'removeButton'
                     templateName: 'Inspector-RemoveElementEditor'

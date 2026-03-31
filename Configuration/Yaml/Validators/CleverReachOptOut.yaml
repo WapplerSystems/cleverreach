@@ -2,4 +2,7 @@ prototypes:
   standard:
     validatorsDefinition:
       CleverReachOptOut:
-        implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
+        implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptoutValidator'
+        formEditor:
+          iconIdentifier: form-validator
+          label: 'CleverReach Opt Out'

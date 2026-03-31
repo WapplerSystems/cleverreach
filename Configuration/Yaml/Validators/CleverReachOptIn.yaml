@@ -3,3 +3,6 @@ prototypes:
     validatorsDefinition:
       CleverReachOptIn:
         implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
+        formEditor:
+          iconIdentifier: form-validator
+          label: 'CleverReach Opt In'

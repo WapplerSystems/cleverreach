@@ -14,47 +14,30 @@ use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WapplerSystems\Cleverreach\Domain\Model\Receiver;
-use WapplerSystems\Cleverreach\Service\ConfigurationService;
 use WapplerSystems\Cleverreach\Tools\Rest;
 
 
 class Api
 {
 
-    /**
-     * @var ConfigurationService
-     */
-    protected ConfigurationService $configurationService;
 
     protected ?Rest $rest;
 
     protected Logger $logger;
 
-    private bool $hasExplicitToken = false;
-
     public const string MODE_OPTIN = 'optin';
 
     public const string MODE_OPTOUT = 'optout';
 
-    public function __construct(ConfigurationService $configurationService)
+    public function __construct()
     {
-        $this->configurationService = $configurationService;
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $this->rest = new Rest('https://rest.cleverreach.com/v3');
     }
 
     public function connectWithToken(string $accessToken): void
     {
-        $this->hasExplicitToken = true;
         $this->rest->setToken($accessToken);
-    }
-
-    public function connect(): void
-    {
-        if ($this->hasExplicitToken) {
-            return;
-        }
-        $this->rest->setToken($this->configurationService->getAccessToken());
     }
 
 
@@ -64,11 +47,7 @@ class Api
      */
     public function addReceiversToList($receivers, ?int $listId = null): bool
     {
-        $this->connect();
 
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
         $aReceivers = [];
 
         if ($receivers instanceof Receiver) {
@@ -107,11 +86,6 @@ class Api
      */
     public function removeReceiversFromGroup($receivers, ?int $listId = null): void
     {
-        $this->connect();
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
 
         try {
             $this->rest->delete('/groups.json/' . $listId . '/receivers/' . $receivers);
@@ -127,11 +101,6 @@ class Api
      */
     public function disableReceiversInGroup($receivers, ?int $listId = null): void
     {
-        $this->connect();
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
 
         try {
             $this->rest->put('/groups.json/' . $listId . '/receivers/' . $receivers . '/setinactive');
@@ -149,12 +118,6 @@ class Api
      */
     public function activateReceiversInGroup($receivers, $listId = null)
     {
-        $this->connect();
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
-
         try {
             $this->rest->put('/groups.json/' . $listId . '/receivers/' . $receivers . '/setactive');
         } catch (\Exception $ex) {
@@ -163,18 +126,8 @@ class Api
     }
 
 
-    /**
-     * @param int $listId
-     * @return mixed|null
-     */
-    public function getList($listId = null)
+    public function getList(int $listId)
     {
-        $this->connect();
-
-        if ($listId === null || $listId === '') {
-            $listId = $this->configurationService->getListId();
-        }
-
         try {
             return $this->rest->get('/groups.json/' . $listId);
         } catch (\Exception $ex) {
@@ -184,19 +137,8 @@ class Api
         return null;
     }
 
-    /**
-     * @param mixed $id id or email
-     * @param int $listId
-     * @return bool
-     */
-    public function isReceiverOfGroup($id, $listId = null): bool
+    public function isReceiverOfGroup(int $id, int $listId): bool
     {
-        $this->connect();
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
-
         try {
             $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
 
@@ -210,19 +152,8 @@ class Api
     }
 
 
-    /**
-     * @param mixed $id id or email
-     * @param int $listId
-     * @return Receiver
-     */
-    public function getReceiverOfGroup($id, $listId = null): ?Receiver
+    public function getReceiverOfGroup(int $id, int $listId): ?Receiver
     {
-        $this->connect();
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
-
         try {
             $return = $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
 
@@ -236,12 +167,7 @@ class Api
     }
 
 
-    /**
-     * @param mixed $id id or email
-     * @param int $listId
-     * @return bool
-     */
-    public function isReceiverOfGroupAndActive($id, $listId = null): bool
+    public function isReceiverOfGroupAndActive(int $id, int $listId): bool
     {
         $receiver = $this->getReceiverOfGroup($id, $listId);
         if ($receiver !== null) {
@@ -251,23 +177,8 @@ class Api
     }
 
 
-    /**
-     * @param string $email
-     * @param int $formId
-     * @param int $listId
-     */
-    public function sendSubscribeMail($email, $formId = null, $listId = null): void
+    public function sendSubscribeMail(string $email, int $formId, int $listId): void
     {
-        $this->connect();
-
-        if ($listId === null || $listId === '') {
-            $listId = $this->configurationService->getListId();
-        }
-        if ($formId === null || $formId === '') {
-            $formId = $this->configurationService->getFormId();
-        }
-
-
         $doidata = [
             'user_ip' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -285,6 +196,11 @@ class Api
 
         } catch (\Exception $ex) {
 
+            if ($ex->getCode() === 403) {
+                throw new \RuntimeException($ex->getMessage());
+            }
+
+            debug($ex);
             if ($ex->getCode() === 404) {
                 // CleverReach sends 404
 
@@ -292,7 +208,6 @@ class Api
 
             $this->log($ex);
         }
-
 
     }
 
@@ -304,16 +219,6 @@ class Api
      */
     public function sendUnsubscribeMail(string $email, ?int $formId = null, $listId = null): void
     {
-        $this->connect();
-
-
-        if ($listId === null) {
-            $listId = $this->configurationService->getListId();
-        }
-        if ($formId === null) {
-            $formId = $this->configurationService->getFormId();
-        }
-
         $doidata = [
             'user_ip' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -346,7 +251,6 @@ class Api
 
     public function setAttributeOfReceiver($email, $attributeId, $value): void
     {
-        $this->connect();
         try {
             $this->rest->put('/receivers.json/' . $email . '/attributes/' . $attributeId,
                 [
@@ -362,7 +266,6 @@ class Api
 
     public function deleteReceiver($email, $listId = null): void
     {
-        $this->connect();
         try {
             $this->rest->delete('/receivers.json/' . $email,
                 [

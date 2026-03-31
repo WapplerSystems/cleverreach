@@ -1,12 +1,13 @@
 /**
  * Module: @wapplersystems/cleverreach/Backend/FormEditor/ConnectionSelectViewModel.js
  *
- * Replaces the Inspector-TextEditor input for the oauthClient finisher property
- * with a <select> populated from active CleverReach OAuth clients via AJAX.
+ * Replaces the Inspector-TextEditor input for the "oauthClient" finisher
+ * property with a <select> populated from active CleverReach OAuth clients
+ * via AJAX.
  *
  * Using Inspector-TextEditor (instead of Inspector-SingleSelectEditor) avoids
- * TYPO3's HMAC "limitedAllowedValues" validation, which would reject dynamically
- * loaded values that are not listed in the static YAML selectOptions.
+ * TYPO3's HMAC "limitedAllowedValues" validation, which rejects dynamic values
+ * not listed in the static YAML selectOptions.
  */
 
 import $ from 'jquery';
@@ -21,16 +22,14 @@ function getPublisherSubscriber() {
 }
 
 /**
- * Fetches active CleverReach OAuth clients and replaces the text input
- * rendered by Inspector-TextEditor with a <select> widget.
+ * Fetches active CleverReach OAuth clients via AJAX and replaces the
+ * Inspector-TextEditor input with a <select>.
  *
- * Inspector-TextEditor binds changes via a "keyup paste" listener on the
- * input element ([data-template-property="propertyPath"]). We hide that
- * input, inject a <select> before it, and mirror the selected value back
- * into the hidden input, triggering "keyup" so the form model is updated.
+ * The hidden input is kept so the existing "keyup" listener of
+ * Inspector-TextEditor syncs the value into the form model.
  *
- * @param {jQuery} editorHtml   jQuery object of the rendered editor DOM node
- * @param {string} currentValue The currently stored property value (client UID)
+ * @param {jQuery} editorHtml
+ * @param {string} currentValue  Currently stored client UID
  */
 async function populateClientSelect(editorHtml, currentValue) {
     const $input = editorHtml.find('[data-template-property="propertyPath"]');
@@ -50,17 +49,16 @@ async function populateClientSelect(editorHtml, currentValue) {
     const $select = $('<select class="form-select form-control"></select>');
 
     clients.forEach(function (client) {
-        const isSelected = client.value === currentValue;
-        const $option = $('<option></option>')
-            .val(client.value)
-            .text(client.label)
-            .prop('selected', isSelected);
-        $select.append($option);
+        $select.append(
+            $('<option></option>')
+                .val(client.value)
+                .text(client.label)
+                .prop('selected', client.value === currentValue)
+        );
     });
 
     $select.on('change', function () {
-        const newValue = $(this).val();
-        $input.val(newValue).trigger('keyup');
+        $input.val($(this).val()).trigger('keyup');
     });
 
     $input.hide().before($select);
@@ -70,10 +68,10 @@ function _subscribeEvents() {
     getPublisherSubscriber().subscribe(
         'view/inspector/editor/insert/perform',
         function (topic, args) {
-            const editorConfiguration = args[0];
-            const editorHtml = args[1];
+            const editorConfiguration         = args[0];
+            const editorHtml                  = args[1];
             const collectionElementIdentifier = args[2];
-            const collectionName = args[3];
+            const collectionName              = args[3];
 
             if (
                 editorConfiguration['identifier'] !== EDITOR_IDENTIFIER ||
@@ -87,7 +85,9 @@ function _subscribeEvents() {
                 collectionElementIdentifier,
                 collectionName
             );
-            const currentValue = String(_formEditorApp.getCurrentlySelectedFormElement().get(propertyPath) ?? '');
+            const currentValue = String(
+                _formEditorApp.getCurrentlySelectedFormElement().get(propertyPath) ?? ''
+            );
 
             populateClientSelect(editorHtml, currentValue);
         }
