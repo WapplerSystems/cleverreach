@@ -1,149 +1,20 @@
-TYPO3:
-  CMS:
-    Form:
+imports:
+  - { resource: './Finishers/Cleverreach.yaml' }
+  - { resource: './FormElements/Overrides/Email.yaml' }
+  - { resource: './FormElements/Overrides/Text.yaml' }
+  - { resource: './Validators/CleverReachOptIn.yaml' }
+  - { resource: './Validators/CleverReachOptOut.yaml' }
 
-      persistenceManager:
-        allowedExtensionPaths:
-          8686: EXT:cleverreach/Resources/Private/Forms/
-        allowSaveToExtensionPaths: false
-        allowDeleteFromExtensionPaths: false
-
-      prototypes:
-        standard:
-
-          validatorsDefinition:
-            CleverReachOptIn:
-              implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
-            CleverReachOptOut:
-              implementationClassName: 'WapplerSystems\Cleverreach\Form\Validator\OptinValidator'
-
-          formElementsDefinition:
-
-            Text:
-              formEditor:
-                editors:
-                  900:
-                    selectOptions:
-                      190:
-                        value: 'CleverReachOptIn'
-                        label: 'CleverReach Opt In'
-                      191:
-                        value: 'CleverReachOptOut'
-                        label: 'CleverReach Opt Out'
-
-                  1900:
-                    identifier: 'cleverreachField'
-                    templateName: 'Inspector-TextEditor'
-                    label: 'CleverReach field'
-                    propertyPath: 'properties.cleverreachField'
-
-                propertyCollections:
-                  validators:
-                    190:
-                      identifier: 'CleverReachOptIn'
-                      editors:
-                        100:
-                          identifier: 'header'
-                          templateName: 'Inspector-CollectionElementHeaderEditor'
-                          label: 'CleverReach Opt In'
-                        200:
-                          identifier: 'groupId'
-                          templateName: 'Inspector-TextEditor'
-                          label: 'Group ID'
-                          propertyPath: 'options.groupId'
-                        9999:
-                          identifier: 'removeButton'
-                          templateName: 'Inspector-RemoveElementEditor'
-
-                    191:
-                      identifier: 'CleverReachOptOut'
-                      editors:
-                        100:
-                          identifier: 'header'
-                          templateName: 'Inspector-CollectionElementHeaderEditor'
-                          label: 'CleverReach Opt Out'
-                        9999:
-                          identifier: 'removeButton'
-                          templateName: 'Inspector-RemoveElementEditor'
+prototypes:
+  standard:
+    formEditor:
+      dynamicJavaScriptModules:
+        additionalViewModelModules:
+          cleverreach: '@wapplersystems/cleverreach/Backend/FormEditor/ConnectionSelectViewModel.js'
 
 
-            GenderSelect:
-              __inheritances:
-                10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.RadioButton'
-              renderingOptions:
-                templateFileName: 'RadioButton'
-              properties:
-                options:
-                  f: 'Female'
-                  m: 'Male'
-
-            Form:
-              formEditor:
-
-                editors:
-                  900:
-                    selectOptions:
-                      90:
-                        value: 'Cleverreach'
-                        label: 'CleverReach'
-
-                propertyCollections:
-                  finishers:
-                    980:
-                      identifier: 'Cleverreach'
-                      editors:
-                        100:
-                          identifier: 'header'
-                          templateName: 'Inspector-CollectionElementHeaderEditor'
-                          label: 'CleverReach'
-                        200:
-                          identifier: 'formId'
-                          templateName: 'Inspector-TextEditor'
-                          label: 'Form Id'
-                          propertyPath: 'options.formId'
-                        300:
-                          identifier: 'groupId'
-                          templateName: 'Inspector-TextEditor'
-                          label: 'Group Id'
-                          propertyPath: 'options.groupId'
-                        400:
-                          identifier: 'cleverreachFinisher'
-                          templateName: 'Inspector-SingleSelectEditor'
-                          propertyPath: 'options.mode'
-                          label: 'Mode'
-                          selectOptions:
-                            10:
-                              value: ''
-                              label: '---'
-                            20:
-                              value: 'Optin'
-                              label: 'Opt in'
-                            30:
-                              value: 'Optout'
-                              label: 'Opt out'
-                        9999:
-                          identifier: 'removeButton'
-                          templateName: 'Inspector-RemoveElementEditor'
-
-          finishersDefinition:
-            Cleverreach:
-              implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher'
-              formEditor:
-                iconIdentifier: 't3-form-icon-finisher'
-                label: 'CleverReach'
-                predefinedDefaults:
-                  options:
-                    formId: ''
-                    groupId: ''
-
-              FormEngine:
-                label: 'CleverReach'
-                elements:
-                  formId:
-                    label: 'Form ID'
-                    config:
-                      type: 'input'
-                  groupId:
-                    label: 'Group ID'
-                    config:
-                      type: 'input'
+persistenceManager:
+  allowedExtensionPaths:
+    8686: EXT:cleverreach/Resources/Private/Forms/
+  allowSaveToExtensionPaths: true
+  allowDeleteFromExtensionPaths: false

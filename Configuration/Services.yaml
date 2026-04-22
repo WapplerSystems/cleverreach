@@ -7,8 +7,15 @@ services:
   WapplerSystems\Cleverreach\:
     resource: '../Classes/*'
 
-  WapplerSystems\Cleverreach\Service\ConfigurationService:
+  WapplerSystems\Cleverreach\Service\CleverreachFormContext:
+    public: true
+    shared: true
+
+  WapplerSystems\Cleverreach\Form\Hook\AfterSubmitHook:
     public: true
 
   WapplerSystems\Cleverreach\CleverReach\Api:
+    public: true
+
+  WapplerSystems\Cleverreach\Controller\Backend\FormEditorAjaxController:
     public: true
