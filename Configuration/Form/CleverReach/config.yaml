@@ -1,0 +1,5 @@
+name: wapplersystems/cleverreach
+priority: 80
+
+imports:
+  - { resource: 'EXT:cleverreach/Configuration/Yaml/BaseSetup.yaml' }
