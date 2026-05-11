@@ -10,10 +10,10 @@
  * not listed in the static YAML selectOptions.
  */
 
-import $ from 'jquery';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 
 const EDITOR_IDENTIFIER = 'oauthClient';
+const FINISHER_IDENTIFIERS = ['Cleverreach'];
 
 let _formEditorApp = null;
 
@@ -22,18 +22,39 @@ function getPublisherSubscriber() {
 }
 
 /**
+ * Resolves the inspector editor's root DOM element. TYPO3 v14 passes a vanilla
+ * Node here; older releases passed a jQuery wrapper, so we accept both.
+ */
+function resolveEditorRoot(editorHtml) {
+    if (!editorHtml) {
+        return null;
+    }
+    if (editorHtml instanceof Element) {
+        return editorHtml;
+    }
+    if (typeof editorHtml.get === 'function') {
+        return editorHtml.get(0) ?? null;
+    }
+    if (typeof editorHtml[0] !== 'undefined') {
+        return editorHtml[0];
+    }
+    return null;
+}
+
+/**
  * Fetches active CleverReach OAuth clients via AJAX and replaces the
  * Inspector-TextEditor input with a <select>.
  *
  * The hidden input is kept so the existing "keyup" listener of
  * Inspector-TextEditor syncs the value into the form model.
- *
- * @param {jQuery} editorHtml
- * @param {string} currentValue  Currently stored client UID
  */
 async function populateClientSelect(editorHtml, currentValue) {
-    const $input = editorHtml.find('[data-template-property="propertyPath"]');
-    if (!$input.length) {
+    const root = resolveEditorRoot(editorHtml);
+    if (!root) {
+        return;
+    }
+    const input = root.querySelector('[data-template-property="propertyPath"]');
+    if (!input) {
         return;
     }
 
@@ -46,22 +67,26 @@ async function populateClientSelect(editorHtml, currentValue) {
         return;
     }
 
-    const $select = $('<select class="form-select form-control"></select>');
+    const select = document.createElement('select');
+    select.className = 'form-select form-control';
 
     clients.forEach(function (client) {
-        $select.append(
-            $('<option></option>')
-                .val(client.value)
-                .text(client.label)
-                .prop('selected', client.value === currentValue)
-        );
+        const option = document.createElement('option');
+        option.value = client.value;
+        option.textContent = client.label;
+        if (client.value === currentValue) {
+            option.selected = true;
+        }
+        select.appendChild(option);
     });
 
-    $select.on('change', function () {
-        $input.val($(this).val()).trigger('keyup');
+    select.addEventListener('change', function () {
+        input.value = select.value;
+        input.dispatchEvent(new Event('keyup', { bubbles: true }));
     });
 
-    $input.hide().before($select);
+    input.style.display = 'none';
+    input.parentNode.insertBefore(select, input);
 }
 
 function _subscribeEvents() {
@@ -75,7 +100,8 @@ function _subscribeEvents() {
 
             if (
                 editorConfiguration['identifier'] !== EDITOR_IDENTIFIER ||
-                collectionName !== 'finishers'
+                collectionName !== 'finishers' ||
+                !FINISHER_IDENTIFIERS.includes(collectionElementIdentifier)
             ) {
                 return;
             }
