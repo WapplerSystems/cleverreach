@@ -1,15 +1,25 @@
 prototypes:
   standard:
     finishersDefinition:
-      Cleverreach:
-        implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher'
+      CleverreachOptIn:
+        implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachOptInFinisher'
         formEditor:
           iconIdentifier: form-finisher-cleverreach
-          label: 'CleverReach'
+          label: 'CleverReach – Opt in'
           predefinedDefaults:
             options:
               oauthClient: ''
-              mode: ''
+              groupId: ''
+              formId: ''
+              emailField: ''
+      CleverreachOptOut:
+        implementationClassName: 'WapplerSystems\Cleverreach\Form\Finishers\CleverreachOptOutFinisher'
+        formEditor:
+          iconIdentifier: form-finisher-cleverreach
+          label: 'CleverReach – Opt out'
+          predefinedDefaults:
+            options:
+              oauthClient: ''
               groupId: ''
               formId: ''
               emailField: ''
@@ -21,48 +31,70 @@ prototypes:
             900:
               selectOptions:
                 90:
-                  value: 'Cleverreach'
-                  label: 'CleverReach'
+                  value: 'CleverreachOptIn'
+                  label: 'CleverReach – Opt in'
+                91:
+                  value: 'CleverreachOptOut'
+                  label: 'CleverReach – Opt out'
 
           propertyCollections:
             finishers:
               980:
-                identifier: 'Cleverreach'
+                identifier: 'CleverreachOptIn'
                 editors:
                   100:
                     identifier: 'header'
                     templateName: 'Inspector-CollectionElementHeaderEditor'
-                    label: 'CleverReach'
+                    label: 'CleverReach – Opt in'
                   200:
                     identifier: 'oauthClient'
                     templateName: 'Inspector-TextEditor'
                     propertyPath: 'options.oauthClient'
                     label: 'OAuth Client'
-                  300:
-                    identifier: 'cleverreachFinisher'
-                    templateName: 'Inspector-SingleSelectEditor'
-                    propertyPath: 'options.mode'
-                    label: 'Mode'
-                    selectOptions:
-                      10:
-                        value: ''
-                        label: '---'
-                      20:
-                        value: 'Optin'
-                        label: 'Opt in'
-                      30:
-                        value: 'Optout'
-                        label: 'Opt out'
                   400:
                     identifier: 'groupId'
                     templateName: 'Inspector-TextEditor'
                     propertyPath: 'options.groupId'
-                    label: 'Group ID'
+                    label: 'Group'
                   500:
                     identifier: 'formId'
                     templateName: 'Inspector-TextEditor'
                     propertyPath: 'options.formId'
-                    label: 'Form ID'
+                    label: 'Form'
+                  600:
+                    identifier: 'emailField'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.emailField'
+                    label: 'Email Field'
+                    enableFormelementSelectionButton: true
+                    propertyValidatorsMode: AND
+                    propertyValidators:
+                      10: NotEmpty
+                  9999:
+                    identifier: 'removeButton'
+                    templateName: 'Inspector-RemoveElementEditor'
+              981:
+                identifier: 'CleverreachOptOut'
+                editors:
+                  100:
+                    identifier: 'header'
+                    templateName: 'Inspector-CollectionElementHeaderEditor'
+                    label: 'CleverReach – Opt out'
+                  200:
+                    identifier: 'oauthClient'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.oauthClient'
+                    label: 'OAuth Client'
+                  400:
+                    identifier: 'groupId'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.groupId'
+                    label: 'Group'
+                  500:
+                    identifier: 'formId'
+                    templateName: 'Inspector-TextEditor'
+                    propertyPath: 'options.formId'
+                    label: 'Form'
                   600:
                     identifier: 'emailField'
                     templateName: 'Inspector-TextEditor'

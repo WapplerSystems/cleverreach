@@ -5,7 +5,8 @@ namespace WapplerSystems\Cleverreach\Form\Hook;
 
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use WapplerSystems\Cleverreach\CleverReach\Api;
-use WapplerSystems\Cleverreach\Form\Finishers\CleverreachFinisher;
+use WapplerSystems\Cleverreach\Form\Finishers\CleverreachOptInFinisher;
+use WapplerSystems\Cleverreach\Form\Finishers\CleverreachOptOutFinisher;
 use WapplerSystems\Cleverreach\Service\CleverreachFormContext;
 use WapplerSystems\OauthService\Service\OAuthClientService;
 
@@ -39,7 +40,8 @@ final class AfterSubmitHook
         $finishers = $formRuntime->getFormDefinition()->getFinishers();
         $found = false;
         foreach ($finishers as $finisher) {
-            if ($finisher instanceof CleverreachFinisher) {
+            if ($finisher instanceof CleverreachOptInFinisher
+                || $finisher instanceof CleverreachOptOutFinisher) {
                 $found = true;
                 break;
             }

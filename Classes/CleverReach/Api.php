@@ -119,10 +119,72 @@ class Api
         return null;
     }
 
-    public function isReceiverOfGroup(int $id, int $listId): bool
+
+    /**
+     * Returns all groups (Empfängerlisten) accessible by the current token.
+     *
+     * @return array<int, array{id: int, name: string}>
+     * @throws \RuntimeException on API failure (caller may translate into UI message)
+     */
+    public function getAllGroups(): array
     {
         try {
-            $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
+            $result = $this->rest->get('/groups.json');
+        } catch (\Exception $ex) {
+            $this->log($ex);
+            throw new \RuntimeException($ex->getMessage(), (int)$ex->getCode(), $ex);
+        }
+
+        $items = [];
+        foreach ((array)$result as $group) {
+            $items[] = [
+                'id' => (int)($group->id ?? 0),
+                'name' => (string)($group->name ?? ''),
+            ];
+        }
+        return $items;
+    }
+
+
+    /**
+     * Returns all forms (Anmeldeformulare) of a given group.
+     *
+     * CleverReach exposes forms globally under /forms.json — each entry has
+     * a group_id we filter by here. (There is no dedicated per-group endpoint.)
+     *
+     * @return array<int, array{id: int, name: string}>
+     * @throws \RuntimeException on API failure
+     */
+    public function getFormsOfGroup(int $groupId): array
+    {
+        try {
+            $result = $this->rest->get('/forms.json');
+        } catch (\Exception $ex) {
+            $this->log($ex);
+            throw new \RuntimeException($ex->getMessage(), (int)$ex->getCode(), $ex);
+        }
+
+        $items = [];
+        foreach ((array)$result as $form) {
+            // CleverReach links a form to its group via "customer_tables_id".
+            if ((int)($form->customer_tables_id ?? 0) !== $groupId) {
+                continue;
+            }
+            $items[] = [
+                'id' => (int)($form->id ?? 0),
+                'name' => (string)($form->name ?? ''),
+            ];
+        }
+        return $items;
+    }
+
+    /**
+     * @param int|string $id receiver id or email address
+     */
+    public function isReceiverOfGroup(int|string $id, int $listId): bool
+    {
+        try {
+            $this->rest->get('/groups.json/' . $listId . '/receivers/' . rawurlencode((string)$id));
 
             return true;
         } catch (\Exception $ex) {
@@ -134,10 +196,13 @@ class Api
     }
 
 
-    public function getReceiverOfGroup(int $id, int $listId): ?Receiver
+    /**
+     * @param int|string $id receiver id or email address
+     */
+    public function getReceiverOfGroup(int|string $id, int $listId): ?Receiver
     {
         try {
-            $return = $this->rest->get('/groups.json/' . $listId . '/receivers/' . $id);
+            $return = $this->rest->get('/groups.json/' . $listId . '/receivers/' . rawurlencode((string)$id));
 
             return Receiver::createInstance($return);
         } catch (\Exception $ex) {
@@ -149,7 +214,10 @@ class Api
     }
 
 
-    public function isReceiverOfGroupAndActive(int $id, int $listId): bool
+    /**
+     * @param int|string $id receiver id or email address
+     */
+    public function isReceiverOfGroupAndActive(int|string $id, int $listId): bool
     {
         $receiver = $this->getReceiverOfGroup($id, $listId);
         if ($receiver !== null) {

@@ -10,10 +10,7 @@ finishers:
     options:
       formId: ''
       groupId: ''
-      mode: Optout
-    identifier: Cleverreach
-    properties:
-      mode: Optout
+    identifier: CleverreachOptOut
   -
     options:
       message: 'Sie erhalten eine E-Mail mit einem Link.'

@@ -1,17 +1,18 @@
 
+identifier: clvroptin
+type: Form
+label: 'CleverReach Optin'
+prototypeName: standard
 renderingOptions:
   submitButtonLabel: Sende
-identifier: clvroptin
-label: 'CleverReach Optin'
-type: Form
-prototypeName: standard
 finishers:
   -
     options:
-      formId: ''
-      groupId: ''
-      mode: Optin
-    identifier: Cleverreach
+      formId: '164069'
+      groupId: '193947'
+      oauthClient: '2'
+      emailField: '{email}'
+    identifier: CleverreachOptIn
   -
     options:
       message: 'Vielen Dank. Sie erhalten eine E-Mail mit Bestätigungslink.'
@@ -56,3 +57,4 @@ renderables:
             identifier: EmailAddress
           -
             identifier: CleverReachOptIn
+variants: {  }

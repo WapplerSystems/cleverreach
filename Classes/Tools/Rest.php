@@ -52,7 +52,7 @@ class Rest
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curl_response = curl_exec($curl);
         $headers = curl_getinfo($curl);
-        curl_close($curl);
+        // curl_close() removed: deprecated/no-op since PHP 8.0.
 
         return $this->returnResult($curl_response, $headers);
     }
@@ -94,7 +94,7 @@ class Rest
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($curl_post_data));
         $curl_response = curl_exec($curl);
         $headers = curl_getinfo($curl);
-        curl_close($curl);
+        // curl_close() removed: deprecated/no-op since PHP 8.0.
 
         return $this->returnResult($curl_response, $headers);
 

@@ -8,4 +8,16 @@ return [
         'ajax' => true,
         'target' => \WapplerSystems\Cleverreach\Controller\Backend\FormEditorAjaxController::class . '::getClientsAction',
     ],
+    'ajax_cleverreach_form_editor_groups' => [
+        'path' => '/ajax/cleverreach/form-editor/groups',
+        'access' => 'public',
+        'ajax' => true,
+        'target' => \WapplerSystems\Cleverreach\Controller\Backend\FormEditorAjaxController::class . '::getGroupsAction',
+    ],
+    'ajax_cleverreach_form_editor_forms' => [
+        'path' => '/ajax/cleverreach/form-editor/forms',
+        'access' => 'public',
+        'ajax' => true,
+        'target' => \WapplerSystems\Cleverreach\Controller\Backend\FormEditorAjaxController::class . '::getFormsAction',
+    ],
 ];

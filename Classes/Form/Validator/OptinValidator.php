@@ -12,8 +12,11 @@ class OptinValidator extends AbstractValidator
 {
     public function isValid(mixed $value): void
     {
-        $context = GeneralUtility::makeInstance(CleverreachFormContext::class);
+        if (!is_string($value) || $value === '') {
+            return;
+        }
 
+        $context = GeneralUtility::makeInstance(CleverreachFormContext::class);
         $groupId = (int)$context->get('groupId');
         if (empty($groupId)) {
             $this->addError('Group ID not set.', 1534719428);
@@ -21,9 +24,10 @@ class OptinValidator extends AbstractValidator
         }
 
         $api = GeneralUtility::makeInstance(Api::class);
-        if ($api->isReceiverOfGroupAndActive((int)$value, $groupId)) {
+        if ($api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
-                $this->translateErrorMessage('validator.alreadyInList', 'cleverreach'),
+                $this->translateErrorMessage('validator.alreadyInList', 'cleverreach')
+                    ?: 'Diese E-Mail-Adresse ist bereits in der Liste eingetragen.',
                 1534719423
             );
         }

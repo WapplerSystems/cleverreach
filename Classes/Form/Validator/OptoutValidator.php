@@ -12,19 +12,22 @@ class OptoutValidator extends AbstractValidator
 {
     public function isValid(mixed $value): void
     {
-        $context = GeneralUtility::makeInstance(CleverreachFormContext::class);
+        if (!is_string($value) || $value === '') {
+            return;
+        }
 
-        $groupId = $context->get('groupId');
+        $context = GeneralUtility::makeInstance(CleverreachFormContext::class);
+        $groupId = (int)$context->get('groupId');
         if (empty($groupId)) {
             $this->addError('Group ID not set.', 1534719428);
             return;
         }
 
         $api = GeneralUtility::makeInstance(Api::class);
-
         if (!$api->isReceiverOfGroupAndActive($value, $groupId)) {
             $this->addError(
-                $this->translateErrorMessage('validator.notInList', 'cleverreach'),
+                $this->translateErrorMessage('validator.notInList', 'cleverreach')
+                    ?: 'Diese E-Mail-Adresse ist nicht in der Liste eingetragen.',
                 1534719523
             );
         }
