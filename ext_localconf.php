@@ -1,19 +1,12 @@
 <?php
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use WapplerSystems\OauthService\Provider\ProviderDefinition;
-use WapplerSystems\OauthService\Provider\ProviderRegistryInterface;
+use WapplerSystems\Cleverreach\Form\Hook\AfterSubmitHook;
 
 (static function () {
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterSubmit'][] =
-        \WapplerSystems\Cleverreach\Form\Hook\AfterSubmitHook::class;
-
-    $registry = GeneralUtility::makeInstance(ProviderRegistryInterface::class);
-    $registry->register(new ProviderDefinition(
-        identifier: 'cleverreach',
-        title: 'CleverReach OAuth',
-        type: 'generic_oauth2',
-        authorizationUrl: 'https://rest.cleverreach.com/oauth/authorize.php',
-        tokenUrl: 'https://rest.cleverreach.com/oauth/token.php',
-    ));
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterSubmit'][] = AfterSubmitHook::class;
 })();
+
+// Provider registration lives in Configuration/Services.yaml as a tagged
+// service (tag: oauth_service.provider_definition) so the provider is also
+// available in the TYPO3 Install Tool's failsafe bootstrap, where
+// ext_localconf.php is not executed.

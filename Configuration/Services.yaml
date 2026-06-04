@@ -7,6 +7,22 @@ services:
   WapplerSystems\Cleverreach\:
     resource: '../Classes/*'
 
+  # Provider registration via DI tag — picked up by oauth-service's
+  # ProviderRegistry constructor via !tagged_iterator. Works in the TYPO3
+  # Install Tool's failsafe bootstrap, unlike imperative register() calls
+  # from ext_localconf.php.
+  cleverreach.provider_definition:
+    class: WapplerSystems\OauthService\Provider\ProviderDefinition
+    autowire: false
+    arguments:
+      $identifier: 'cleverreach'
+      $title: 'CleverReach OAuth'
+      $type: 'generic_oauth2'
+      $authorizationUrl: 'https://rest.cleverreach.com/oauth/authorize.php'
+      $tokenUrl: 'https://rest.cleverreach.com/oauth/token.php'
+    tags:
+      - 'oauth_service.provider_definition'
+
   WapplerSystems\Cleverreach\Service\CleverreachFormContext:
     public: true
     shared: true
