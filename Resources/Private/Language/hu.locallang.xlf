@@ -5,11 +5,11 @@
     <body>
       <trans-unit id="validator.alreadyInList">
         <source>This email address is already in this list.</source>
-        <target state="needs-translation">This email address is already in this list.</target>
+        <target state="translated">Ez az e-mail cím már szerepel a listában.</target>
       </trans-unit>
       <trans-unit id="validator.notInList">
         <source>This email address is not in this list.</source>
-        <target state="needs-translation">This email address is not in this list.</target>
+        <target state="translated">Ez az e-mail cím nem szerepel a listában.</target>
       </trans-unit>
     </body>
   </file>
