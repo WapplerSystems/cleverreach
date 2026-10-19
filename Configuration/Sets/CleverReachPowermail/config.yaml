@@ -2,4 +2,6 @@ name: wapplersystems/cleverreach-powermail
 label: CleverReach Powermail Integration
 dependencies:
   - wapplersystems/cleverreach
+# optional: without powermail the set would be invalid and TYPO3 logs an error on every request
+optionalDependencies:
   - in2code/powermail-main
