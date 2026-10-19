@@ -1,1 +1,1 @@
-@import 'EXT:cleverreach/Configuration/TypoScript/Form/setup.typoscript'
+@import 'EXT:cleverreach/Configuration/TypoScript/Powermail/setup.typoscript'
